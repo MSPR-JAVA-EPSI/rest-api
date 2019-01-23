@@ -17,6 +17,7 @@ public class AuthServiceImpl implements AuthService {
 	
 	@Override
 	public boolean isValid(String token) {
+		System.out.println(token);
 		return true;
 	}
 
