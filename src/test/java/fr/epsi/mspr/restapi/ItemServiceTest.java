@@ -26,6 +26,4 @@ public class ItemServiceTest {
 		List<Item> list = service.getAll();
 		assertNotEquals(0, list.size());
 	}
-
 }
-

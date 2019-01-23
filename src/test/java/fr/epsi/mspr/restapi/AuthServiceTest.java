@@ -1,6 +1,7 @@
 package fr.epsi.mspr.restapi;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +22,10 @@ public class AuthServiceTest {
 	public void testAuthValidation() {
 		assertEquals(true, service.isValid(null));
 	}
-
+	
+	@Test
+	public void test() {
+		assertNotEquals(null, service.authentificateImage(null));
+	}
 }
 
