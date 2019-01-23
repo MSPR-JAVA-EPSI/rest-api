@@ -20,7 +20,7 @@ public class AuthController {
 
 	@RequestMapping(value = "/auth", produces = { MediaType.APPLICATION_JSON })
     public @ResponseBody ResponseEntity<?> auth(@RequestBody String result) {
-		String token = authService.authentificateImage(null);
+		String token = authService.authentificateImage(result);
 		return ResponseEntity.ok(new DtoToken(token));
     }
 }

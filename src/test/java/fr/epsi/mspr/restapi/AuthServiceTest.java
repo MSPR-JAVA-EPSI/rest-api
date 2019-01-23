@@ -20,7 +20,7 @@ public class AuthServiceTest {
 	
 	@Test
 	public void testAuthValidation() {
-		assertEquals(true, service.isValid(null));
+		assertEquals(true, service.isValid("28412842"));
 	}
 	
 	@Test

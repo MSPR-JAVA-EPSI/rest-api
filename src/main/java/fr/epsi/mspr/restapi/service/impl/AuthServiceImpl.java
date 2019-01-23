@@ -6,16 +6,22 @@ import org.springframework.stereotype.Service;
 
 import fr.epsi.mspr.restapi.service.AuthService;
 import fr.epsi.mspr.restapi.service.metier.dto.DtoToken;
-import fr.epsi.mspr.restapi.service.metier.dto.in.DtoInIdentification;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
-	public String authentificateImage(DtoInIdentification identifier) {
-		return UUID.randomUUID().toString();
+	@Override
+	public boolean isValid(DtoToken token) {
+		return isValid(token.getToken());
+	}
+	
+	@Override
+	public boolean isValid(String token) {
+		return true;
 	}
 
-	public boolean isValid(DtoToken token) {
-		return true;
+	@Override
+	public String authentificateImage(String result) {
+		return UUID.randomUUID().toString();
 	}
 }
