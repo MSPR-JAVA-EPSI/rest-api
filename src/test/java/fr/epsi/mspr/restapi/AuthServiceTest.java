@@ -21,6 +21,5 @@ public class AuthServiceTest {
 	public void testAuthValidation() {
 		assertEquals(true, service.isValid(null));
 	}
-
 }
 
