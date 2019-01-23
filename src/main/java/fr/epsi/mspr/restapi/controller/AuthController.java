@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.epsi.mspr.restapi.service.AuthService;
+import fr.epsi.mspr.restapi.service.metier.dto.DtoToken;
 
 @RestController
 public class AuthController {
@@ -19,7 +20,7 @@ public class AuthController {
 
 	@RequestMapping(value = "/auth", produces = { MediaType.APPLICATION_JSON })
     public @ResponseBody ResponseEntity<?> auth(@RequestBody String result) {
-		System.out.println(result);
-		return ResponseEntity.ok(authService.authentificateImage(null));
+		String token = authService.authentificateImage(null);
+		return ResponseEntity.ok(new DtoToken(token));
     }
 }
