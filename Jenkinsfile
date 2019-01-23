@@ -19,12 +19,6 @@ node {
    stage('Results') {
       junit '**/target/surefire-reports/TEST-*.xml'
       archive 'target/*.jar'
-      def slackResponse = slackSend(channel: "build", message: "Started build")
-      slackSend(channel: slackResponse.threadId, message: "Build still in progress")
-      slackSend(
-          channel: slackResponse.threadId,
-          replyBroadcast: true,
-          message: "Build failed. Broadcast to channel for better visibility."
-      )
+      def slackResponse = slackSend(channel: "build", message: "New build done.")
    }
 }

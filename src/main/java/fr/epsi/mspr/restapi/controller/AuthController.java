@@ -17,7 +17,7 @@ public class AuthController {
 	@Autowired
     private AuthService authService;
 
-	@RequestMapping(value = "/auth/", produces = { MediaType.APPLICATION_JSON })
+	@RequestMapping(value = "/auth", produces = { MediaType.APPLICATION_JSON })
     public @ResponseBody ResponseEntity<?> auth(@RequestBody String result) {
 		System.out.println(result);
 		return ResponseEntity.ok(authService.authentificateImage(null));
