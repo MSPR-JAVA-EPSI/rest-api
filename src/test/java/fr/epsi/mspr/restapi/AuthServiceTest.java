@@ -20,7 +20,8 @@ public class AuthServiceTest {
 	
 	@Test
 	public void testAuthValidation() {
-		assertEquals(true, service.isValid("28412842"));
+		String key = "Bearer 117b3a03-ee64-4b25-8291-52ab6ac4dafe";
+		assertEquals(true, service.isValid(key));
 	}
 	
 	@Test
