@@ -26,6 +26,7 @@ import org.springframework.data.repository.Repository;
  *
  * @author Oliver Gierke
  * @author Eberhard Wolff
+ * @author Maël Chauvet
  */
 @NoRepositoryBean
 public interface CustomRepository<T, ID> extends Repository<T, ID> {

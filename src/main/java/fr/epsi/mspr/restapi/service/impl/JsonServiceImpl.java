@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import fr.epsi.mspr.restapi.service.JsonService;
 import fr.epsi.mspr.restapi.service.metier.dto.DtoToken;
+import fr.epsi.mspr.restapi.service.metier.dto.in.DtoInIdentification;
 
 @Service
 public class JsonServiceImpl implements JsonService {
@@ -17,7 +18,12 @@ public class JsonServiceImpl implements JsonService {
 	}
 	
 	@Override
-	public DtoToken getDtoToken(String result) {
-		return gson.fromJson(result, DtoToken.class);
+	public DtoToken getDtoToken(String data) {
+		return gson.fromJson(data, DtoToken.class);
+	}
+
+	@Override
+	public DtoInIdentification getDtoInIdentification(String data) {
+		return gson.fromJson(data, DtoInIdentification.class);
 	}
 }
