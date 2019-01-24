@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.google.gson.Gson;
+
 import fr.epsi.mspr.restapi.service.AuthService;
+import fr.epsi.mspr.restapi.service.metier.dto.in.DtoInIdentification;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -21,12 +24,25 @@ public class AuthServiceTest {
 	@Test
 	public void testAuthValidation() {
 		String key = "Bearer 117b3a03-ee64-4b25-8291-52ab6ac4dafe";
-		assertEquals(true, service.isValid(key));
+		assertEquals(false, service.isValid(key));
 	}
 	
 	@Test
-	public void test() {
-		assertNotEquals(null, service.authentificateImage(null));
+	public void testAuthWithImageWithNoData() {
+		assertEquals(null, service.authentificateImage(null));
+	}
+	
+	@Test
+	public void testAuthWithImageWithBadData() {
+		assertEquals(null, service.authentificateImage("JéùjejfzzcEHT%jy9h56"));
+	}
+	
+	@Test
+	public void testAuthWithImageWithCorrectUser() {
+		Gson gson = new Gson();
+		DtoInIdentification dtoIdentification = new DtoInIdentification();
+		dtoIdentification.setIdentifier("Clément");
+		assertNotEquals(null, service.authentificateImage(gson.toJson(dtoIdentification)));
 	}
 }
 

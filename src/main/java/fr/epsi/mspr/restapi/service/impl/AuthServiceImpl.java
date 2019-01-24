@@ -27,6 +27,7 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public String authentificateImage(String data) {
 		DtoInIdentification identification = jsonService.getDtoInIdentification(data);
+		if(identification == null) return null;
 		Guardian guardian = guardianRepository.findByGuaName(identification.getIdentifier());
 		if(guardian == null) return null;
 		boolean callApiResult = true;
