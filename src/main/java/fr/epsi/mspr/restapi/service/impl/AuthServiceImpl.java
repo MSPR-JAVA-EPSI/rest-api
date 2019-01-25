@@ -27,11 +27,20 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public String authentificateImage(String data) {
 		DtoInIdentification identification = jsonService.getDtoInIdentification(data);
-		if(identification == null) return null;
+		if(identification == null) {
+			System.out.println(this.getClass().getName() + "> bad json");
+			return null;
+		}
 		Guardian guardian = guardianRepository.findByGuaName(identification.getIdentifier());
-		if(guardian == null) return null;
+		if(guardian == null) {
+			System.out.println(this.getClass().getName() + "> guardian not found");
+			return null;
+		}
 		boolean callApiResult = true;
-		if(!callApiResult) return null;
+		if(!callApiResult) {
+			System.out.println(this.getClass().getName() + "> api not ok");
+			return null;
+		}
 		guardian.setGuaToken(UUID.randomUUID().toString());
 		guardianRepository.save(guardian);
 		return guardian.getGuaToken();

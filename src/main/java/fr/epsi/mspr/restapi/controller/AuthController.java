@@ -21,6 +21,8 @@ public class AuthController {
 
 	@RequestMapping(value = "/auth", produces = { MediaType.APPLICATION_JSON })
     public @ResponseBody ResponseEntity<?> auth(@RequestBody String result) {
+		System.out.println(this.getClass().getName() + "> received data");
+		System.out.println(this.getClass().getName() + "> " + result);
 		String token = authService.authentificateImage(result);
 		if(token == null) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -45,4 +45,3 @@ public class AuthServiceTest {
 		assertNotEquals(null, service.authentificateImage(gson.toJson(dtoIdentification)));
 	}
 }
-
