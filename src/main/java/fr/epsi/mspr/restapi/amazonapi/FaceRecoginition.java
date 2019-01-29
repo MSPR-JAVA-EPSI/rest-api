@@ -15,7 +15,6 @@ import org.json.JSONObject;
 
 public class FaceRecoginition {
 
-	private static final String attributes = "age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise";
 	private static final String subscriptionKey = "d87325fc69ec41bf85fdd87c7b2de574";
 	private static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
 
