@@ -12,18 +12,18 @@ import fr.epsi.mspr.restapi.amazonapi.FaceRecoginition;
 @SpringBootTest
 public class FaceRecognitionTest {
 
-	@Test
-	public void apiRecognitionTest() {
-		String id1 = FaceRecoginition.getFaceId("http://img.shyndard.eu/BECHMHd.jpg");
-		System.out.println(id1);
-		String id2 = FaceRecoginition.getFaceId("http://img.shyndard.eu/MRV1Tdv.jpg");
-		System.out.println(id2);
-		double comparaison = FaceComparaison.compare(id1, id2);
-		System.out.println("Pourcentage de ressemblance : " + comparaison);
-	}
-	
-	@Test
-	public void apiComparaisonTest() {
-		FaceComparaison.compare(null, null);
-	}
+//	@Test
+//	public void apiRecognitionTest() {
+//		String id1 = FaceRecoginition.getFaceId("http://img.shyndard.eu/BECHMHd.jpg");
+//		System.out.println(id1);
+//		String id2 = FaceRecoginition.getFaceId("http://img.shyndard.eu/MRV1Tdv.jpg");
+//		System.out.println(id2);
+//		double comparaison = FaceComparaison.compare(id1, id2);
+//		System.out.println("Pourcentage de ressemblance : " + comparaison);
+//	}
+//	
+//	@Test
+//	public void apiComparaisonTest() {
+//		FaceComparaison.compare(null, null);
+//	}
 }

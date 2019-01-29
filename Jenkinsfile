@@ -19,6 +19,6 @@ node {
    stage('Results') {
       junit '**/target/surefire-reports/TEST-*.xml'
       archive 'target/*.jar'
-      def slackResponse = slackSend(channel: "build", message: "New build done (${JENKINS_URL})")
+      def slackResponse = slackSend(channel: "build", message: "New build done (${BUILD_URL})")
    }
 }
