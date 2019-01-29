@@ -1,15 +1,6 @@
 pipeline {
   agent any
   stages {
-    stage('Preparation') {
-      steps {
-        sh '''
-      git clone https://github.com/MSPR-JAVA-EPSI/rest-api.git
-
-'''
-        sh 'def slackResponse = slackSend(channel: "build", message: "Preparing to build rest-api")'
-      }
-    }
     stage('Build') {
       steps {
         sh '''sh "\'${mvnHome}/bin/mvn\' -Dmaven.test.failure.ignore clean package install"
