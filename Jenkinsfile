@@ -3,8 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''sh "\'${mvnHome}/bin/mvn\' -Dmaven.test.failure.ignore clean package install"
-     '''
+        sh 'mvn clean package install'
         sh 'slackSend(channel: "build", message: "New build done (${BUILD_URL})")'
       }
     }
