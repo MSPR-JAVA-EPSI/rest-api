@@ -7,7 +7,6 @@ pipeline {
       git clone https://github.com/MSPR-JAVA-EPSI/rest-api.git
 
 '''
-        sh 'mvnHome = tool \'M3\''
         sh 'def slackResponse = slackSend(channel: "build", message: "Preparing to build rest-api")'
       }
     }
