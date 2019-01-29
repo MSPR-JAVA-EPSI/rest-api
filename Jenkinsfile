@@ -5,7 +5,7 @@ node {
       git 'https://github.com/MSPR-JAVA-EPSI/rest-api.git'
       // Get the Maven tool.
       // ** NOTE: This 'M3' Maven tool must be configured
-      // **       in the global configuration.           
+      // **       in the global configuration.  yo         
       mvnHome = tool 'M3'
    }
    stage('Build') {
