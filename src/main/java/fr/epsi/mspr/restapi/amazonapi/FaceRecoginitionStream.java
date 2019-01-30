@@ -7,53 +7,62 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class FaceComparaison {
-	
+public class FaceRecoginitionStream {
+
 	private static final String subscriptionKey = "d87325fc69ec41bf85fdd87c7b2de574";
-	private static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/verify";
-	
-	public static boolean compare(String id1, String id2) {
-		
+	private static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
+
+	public static String getFaceId(byte[] bytes) {
+
 		HttpClient httpclient = HttpClientBuilder.create().build();
 		try {
 			URIBuilder builder = new URIBuilder(uriBase);
+
+			// Request parameters. All of them are optional.
+			builder.setParameter("returnFaceId", "true");
+			builder.setParameter("returnFaceLandmarks", "false");
+			builder.setParameter("returnFaceAttributes", "");
+
+			// Prepare the URI for the REST API call.
 			URI uri = builder.build();
 			HttpPost request = new HttpPost(uri);
 
 			// Request headers.
-			request.setHeader("Content-Type", "application/json");
+			request.setHeader("Content-Type", "application/octet-stream");
 			request.setHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
 
 			// Request body.
-			StringEntity reqEntity = new StringEntity("{\"faceId1\": \"" + id1 + "\", \"faceId2\": \"" + id2 + "\"}");
+			ByteArrayEntity reqEntity = new ByteArrayEntity(bytes, ContentType.APPLICATION_OCTET_STREAM);
 			request.setEntity(reqEntity);
 
 			// Execute the REST API call and get the response entity.
 			HttpResponse response = httpclient.execute(request);
 			HttpEntity entity = response.getEntity();
-			if (entity == null) {
-				return false;
-			} else {
+			if (entity != null) {
+				// Format and display the JSON response.
 				String jsonString = EntityUtils.toString(entity).trim();
 				System.out.println(jsonString);
 				if (jsonString.charAt(0) == '[') {
 					JSONArray jsonArray = new JSONArray(jsonString);
-					return jsonArray.getBoolean(1);
+					JSONObject object = jsonArray.getJSONObject(0);
+					return object.getString("faceId");
 				} else if (jsonString.charAt(0) == '{') {
 					JSONObject jsonObject = new JSONObject(jsonString);
-					return jsonObject.getBoolean("isIdentical");
+					return jsonObject.toString(2);
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			// Display error message.
+			System.out.println(e.getMessage());
 		}
-		return false;
+		return null;
 	}
 
 }
