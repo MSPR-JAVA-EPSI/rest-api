@@ -22,6 +22,7 @@ public class VisageApiServiceImpl implements VisageApiService {
 			byte[] bytes = IOUtils.toByteArray(stream);
 			String id = FaceRecoginitionStream.getFaceId(bytes);
 			System.out.println(id);
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
