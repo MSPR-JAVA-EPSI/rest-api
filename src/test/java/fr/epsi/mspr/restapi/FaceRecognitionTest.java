@@ -1,12 +1,8 @@
 package fr.epsi.mspr.restapi;
 
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import fr.epsi.mspr.restapi.amazonapi.FaceComparaison;
-import fr.epsi.mspr.restapi.amazonapi.FaceRecoginition;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

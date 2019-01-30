@@ -9,6 +9,7 @@ import fr.epsi.mspr.restapi.dao.entity.Guardian;
 import fr.epsi.mspr.restapi.dao.repository.GuardianRepository;
 import fr.epsi.mspr.restapi.service.AuthService;
 import fr.epsi.mspr.restapi.service.JsonService;
+import fr.epsi.mspr.restapi.service.VisageApiService;
 import fr.epsi.mspr.restapi.service.metier.dto.in.DtoInIdentification;
 
 @Service
@@ -18,6 +19,8 @@ public class AuthServiceImpl implements AuthService {
 	private GuardianRepository<Guardian> guardianRepository;
 	@Autowired
 	private JsonService jsonService;
+	@Autowired
+	private VisageApiService visageApiService;
 	
 	@Override
 	public boolean isValid(String token) {
@@ -37,7 +40,7 @@ public class AuthServiceImpl implements AuthService {
 			return null;
 		}
 		boolean callApiResult = true;
-		if(!callApiResult) {
+		if(visageApiService.isValidUser(identification, guardian)) {
 			System.out.println(this.getClass().getName() + "> api not ok");
 			return null;
 		}
