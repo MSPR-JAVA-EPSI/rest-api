@@ -3,6 +3,7 @@ package fr.epsi.mspr.restapi.dao.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 @Entity
 public class Guardian {
@@ -12,8 +13,9 @@ public class Guardian {
 	private long guaId;
 	@Column(name="guardian_name")
 	private String guaName;
+	@Lob
 	@Column(name="guardian_image")
-	private String guaQuantity;
+	private byte[] guaImage;
 	@Column(name="guardian_token")
 	private String guaToken;
 	
@@ -29,16 +31,17 @@ public class Guardian {
 	public void setGuaName(String guaName) {
 		this.guaName = guaName;
 	}
-	public String getGuaQuantity() {
-		return guaQuantity;
+	public byte[] getGuaImage() {
+		return guaImage;
 	}
-	public void setGuaQuantity(String guaQuantity) {
-		this.guaQuantity = guaQuantity;
+	public void setGuaImage(byte[] img) {
+		this.guaImage = img;
 	}
 	public String getGuaToken() {
 		return guaToken;
 	}
 	public void setGuaToken(String guaToken) {
 		this.guaToken = guaToken;
-	}	
+	}
+	
 }

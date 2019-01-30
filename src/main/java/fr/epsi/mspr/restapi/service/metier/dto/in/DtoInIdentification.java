@@ -3,7 +3,7 @@ package fr.epsi.mspr.restapi.service.metier.dto.in;
 public class DtoInIdentification {
 
 	private String image;
-	private String identifier;
+	private String id;
 	
 	public String getImage() {
 		return image;
@@ -12,9 +12,9 @@ public class DtoInIdentification {
 		this.image = image;
 	}
 	public String getIdentifier() {
-		return identifier;
+		return id;
 	}
 	public void setIdentifier(String identifier) {
-		this.identifier = identifier;
+		this.id = identifier;
 	}
 }
