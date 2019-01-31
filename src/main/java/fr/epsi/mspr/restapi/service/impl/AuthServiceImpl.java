@@ -39,7 +39,6 @@ public class AuthServiceImpl implements AuthService {
 			System.out.println(this.getClass().getName() + "> guardian not found");
 			return null;
 		}
-		boolean callApiResult = true;
 		if(visageApiService.isValidUser(identification, guardian)) {
 			System.out.println(this.getClass().getName() + "> api not ok");
 			return null;
