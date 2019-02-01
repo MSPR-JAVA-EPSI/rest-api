@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import fr.epsi.mspr.restapi.dao.entity.Borrow;
 import fr.epsi.mspr.restapi.dao.entity.BorrowItem;
@@ -16,6 +17,7 @@ import fr.epsi.mspr.restapi.service.GuardianService;
 import fr.epsi.mspr.restapi.service.JsonService;
 import fr.epsi.mspr.restapi.service.metier.dto.in.DtoInBorrowItems;
 
+@Service
 public class BorrowServiceImpl implements BorrowService {
 
 	@Autowired
@@ -52,6 +54,7 @@ public class BorrowServiceImpl implements BorrowService {
 		if(guardian == null) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
+		//TODO : Attente d'un id de borrow à supprimer en base
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

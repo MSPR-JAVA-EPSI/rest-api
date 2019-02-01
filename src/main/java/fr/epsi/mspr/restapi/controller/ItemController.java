@@ -47,17 +47,13 @@ public class ItemController {
 		return borrowService.borrow(body, guardian);
 	}
 
-	@RequestMapping(value = "/item/getBorrows")
+	@RequestMapping(value = "/item/getBorrows", produces = { MediaType.APPLICATION_JSON })
 	public @ResponseBody ResponseEntity<?> getBorrow(@RequestHeader(value = "Authorization") String authorization) {
-		Guardian guardian = guardianService.getByToken(authorization);
-		if (guardian == null) {
-			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-		}
-		return ResponseEntity.ok(guardian.getBorrow());
+		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 	}
 	
 	@RequestMapping(value = "/item/returnBorrow")
 	public @ResponseBody ResponseEntity<?> returnBorrow(@RequestHeader(value = "Authorization") String authorization, @RequestBody String body) {
-		return borrowService.returnBorrow(authorization, body);
+		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 	}
 }
