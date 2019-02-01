@@ -40,13 +40,13 @@ public class AuthServiceImpl implements AuthService {
 		Guardian guardian = guardianRepository.findByGuaName(identification.getIdentifier());
 		if(guardian == null) {
 			System.out.println(this.getClass().getName() + "> guardian not found");
-			new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 		if(visageApiService.isValidUser(identification, guardian)) {
 			guardian.setGuaToken(UUID.randomUUID().toString());
 			guardianRepository.save(guardian);
 			return ResponseEntity.ok(new DtoToken(guardian.getGuaToken()));
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }
