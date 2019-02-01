@@ -11,10 +11,10 @@ public class DtoInIdentification {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public String getIdentifier() {
+	public String getId() {
 		return id;
 	}
-	public void setIdentifier(String identifier) {
-		this.id = identifier;
+	public void setId(String id) {
+		this.id = id;
 	}
 }

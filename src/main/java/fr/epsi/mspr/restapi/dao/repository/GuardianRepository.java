@@ -2,9 +2,9 @@ package fr.epsi.mspr.restapi.dao.repository;
 
 import fr.epsi.mspr.restapi.dao.entity.Guardian;
 
-public interface GuardianRepository<E> extends CustomRepository<Guardian, Long> {
+public interface GuardianRepository extends CustomRepository<Guardian, Long> {
 
-	E findByGuaToken(String guaToken);
+	Guardian findByGuaToken(String guaToken);
 	
-	E findByGuaName(String guaName);
+	Guardian findByGuaName(String guaName);
 }

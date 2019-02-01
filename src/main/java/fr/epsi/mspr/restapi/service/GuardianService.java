@@ -7,4 +7,6 @@ public interface GuardianService {
 	Guardian findById(long id);
 
 	void save(Guardian g);
+
+	Guardian getByToken(String token);
 }

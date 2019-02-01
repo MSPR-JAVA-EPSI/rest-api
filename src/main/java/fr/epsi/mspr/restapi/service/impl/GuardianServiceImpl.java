@@ -11,7 +11,7 @@ import fr.epsi.mspr.restapi.service.GuardianService;
 public class GuardianServiceImpl implements GuardianService {
 
 	@Autowired
-	private GuardianRepository<Guardian> guardianRepository;
+	private GuardianRepository guardianRepository;
 	
 	@Override
 	public Guardian findById(long id) {
@@ -21,5 +21,10 @@ public class GuardianServiceImpl implements GuardianService {
 	@Override
 	public void save(Guardian g) {
 		guardianRepository.save(g);
+	}
+	
+	@Override
+	public Guardian getByToken(String token) {
+		return guardianRepository.findByGuaToken(token.split(" ")[1]);
 	}
 }

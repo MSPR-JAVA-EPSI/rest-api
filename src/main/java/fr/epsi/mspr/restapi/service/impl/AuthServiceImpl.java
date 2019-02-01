@@ -19,7 +19,7 @@ import fr.epsi.mspr.restapi.service.metier.dto.in.DtoInIdentification;
 public class AuthServiceImpl implements AuthService {
 
 	@Autowired
-	private GuardianRepository<Guardian> guardianRepository;
+	private GuardianRepository guardianRepository;
 	@Autowired
 	private JsonService jsonService;
 	@Autowired
@@ -37,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
 			System.out.println(this.getClass().getName() + "> bad json");
 			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
 		}
-		Guardian guardian = guardianRepository.findByGuaName(identification.getIdentifier());
+		Guardian guardian = guardianRepository.findByGuaName(identification.getId());
 		if(guardian == null) {
 			System.out.println(this.getClass().getName() + "> guardian not found");
 			return new ResponseEntity<>("Ce gardien est introuvable", HttpStatus.NO_CONTENT);

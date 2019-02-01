@@ -1,12 +1,18 @@
 package fr.epsi.mspr.restapi.dao.entity;
 
+import java.io.Serializable;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Item {
+public class Item  implements Serializable {
 
+	private static final long serialVersionUID = 838937981809482869L;
+	
 	@Id
 	@Column(name="item_id")
 	private long id;
@@ -14,6 +20,8 @@ public class Item {
 	private String name;
 	@Column(name="item_quantity")
 	private int quantity;
+	@OneToMany(mappedBy="item")
+	private Set<BorrowItem> borrowItems;
 	
 	public long getId() {
 		return id;
@@ -32,5 +40,11 @@ public class Item {
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
-	}	
+	}
+	public Set<BorrowItem> getBorrowItems() {
+		return borrowItems;
+	}
+	public void setBorrowItems(Set<BorrowItem> borrowItems) {
+		this.borrowItems = borrowItems;
+	}
 }
