@@ -1,6 +1,7 @@
 package fr.epsi.mspr.restapi.visageapi;
 
 import java.net.URI;
+import java.util.UUID;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,7 +20,7 @@ public class FaceRecognitionStream {
 	private static final String subscriptionKey = "d87325fc69ec41bf85fdd87c7b2de574";
 	private static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
 
-	public static String getFaceId(byte[] bytes) {
+	public static UUID getFaceId(byte[] bytes) {
 
 		HttpClient httpclient = HttpClientBuilder.create().build();
 		try {
@@ -52,10 +53,10 @@ public class FaceRecognitionStream {
 				if (jsonString.charAt(0) == '[') {
 					JSONArray jsonArray = new JSONArray(jsonString);
 					JSONObject object = jsonArray.getJSONObject(0);
-					return object.getString("faceId");
+					return UUID.fromString(object.getString("faceId"));
 				} else if (jsonString.charAt(0) == '{') {
 					JSONObject jsonObject = new JSONObject(jsonString);
-					return jsonObject.toString(2);
+					return UUID.fromString(jsonObject.toString(2));
 				}
 			}
 		} catch (Exception ex) {

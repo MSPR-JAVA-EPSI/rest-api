@@ -1,6 +1,7 @@
 package fr.epsi.mspr.restapi.service.impl;
 
 import java.util.Base64;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,11 @@ public class VisageApiServiceImpl implements VisageApiService {
 	public boolean isValidUser(DtoInIdentification identification, Guardian guardian) {
 		try {
 			byte[] bytes = Base64.getDecoder().decode(identification.getImage().getBytes());
-			String id1 = FaceRecognitionStream.getFaceId(bytes);
-			String id2 = FaceRecognitionStream.getFaceId(guardian.getGuaImage());
-			return FaceComparaison.compare(id1, id2);
+			UUID uuid1 = FaceRecognitionStream.getFaceId(bytes);
+			if(uuid1 == null) return false;
+			UUID uuid2 = FaceRecognitionStream.getFaceId(guardian.getGuaImage());
+			if(uuid2 == null) return false;
+			return FaceComparaison.compare(uuid1.toString(), uuid2.toString());
 		} catch (Exception ex) {
 			System.out.println(this.getClass().getName() + "> " + ex.getMessage());
 		}
