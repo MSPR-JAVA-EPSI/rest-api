@@ -6,14 +6,14 @@ import fr.epsi.mspr.restapi.dao.entity.Item;
 
 public class DtoOutEquipment {
 
-	private List<Item> equipements;
+	private List<Item> equipments;
 
-	public List<Item> getEquipements() {
-		return equipements;
+	public List<Item> getEquipments() {
+		return equipments;
 	}
 
-	public DtoOutEquipment setEquipements(List<Item> equipements) {
-		this.equipements = equipements;
+	public DtoOutEquipment setEquipments(List<Item> equipments) {
+		this.equipments = equipments;
 		return this;
 	}
 }

@@ -27,7 +27,7 @@ public class ItemController {
 	@RequestMapping(value = "/item/getAll", produces = { MediaType.APPLICATION_JSON })
 	public @ResponseBody ResponseEntity<?> getAll(@RequestHeader(value="Authorization") String authorization, @RequestBody String body) {
 		if (authService.isValid(authorization)) {
-			return ResponseEntity.ok(new DtoOutEquipment().setEquipements(itemService.getAll()));
+			return ResponseEntity.ok(new DtoOutEquipment().setEquipments(itemService.getAll()));
 		}
 		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
