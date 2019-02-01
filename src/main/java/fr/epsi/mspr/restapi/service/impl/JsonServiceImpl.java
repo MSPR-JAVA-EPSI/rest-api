@@ -20,28 +20,19 @@ public class JsonServiceImpl implements JsonService {
 	
 	@Override
 	public DtoToken getDtoToken(String data) {
-		try {
-			return gson.fromJson(data, DtoToken.class);
-		} catch(Exception ex) {
-			return null;
-		}
+		try { return gson.fromJson(data, DtoToken.class);
+		} catch(Exception ex) {return null;}
 	}
 
 	@Override
 	public DtoInIdentification getDtoInIdentification(String data) {
-		try {
-			return gson.fromJson(data, DtoInIdentification.class);
-		} catch(Exception ex) {
-			return null;
-		}
+		try { return gson.fromJson(data, DtoInIdentification.class);
+		} catch(Exception ex) {return null;}
 	}
 
 	@Override
 	public DtoInBorrowItems getDtoInBorrowItems(String data) {
-		try {
-			return gson.fromJson(data, DtoInBorrowItems.class);
-		} catch(Exception ex) {
-			return null;
-		}
+		try { return gson.fromJson(data, DtoInBorrowItems.class);
+		} catch(Exception ex) {return null;}
 	}
 }

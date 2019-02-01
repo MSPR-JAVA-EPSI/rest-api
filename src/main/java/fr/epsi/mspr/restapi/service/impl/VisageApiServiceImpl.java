@@ -17,9 +17,7 @@ public class VisageApiServiceImpl implements VisageApiService {
 	public boolean isValidUser(DtoInIdentification identification, Guardian guardian) {
 		try {
 			byte[] bytes = Base64.getDecoder().decode(identification.getImage().getBytes());
-			System.out.println(this.getClass().getName() + "> Try auth body data");
 			String id1 = FaceRecognitionStream.getFaceId(bytes);
-			System.out.println(this.getClass().getName() + "> Try auth database");
 			String id2 = FaceRecognitionStream.getFaceId(guardian.getGuaImage());
 			return FaceComparaison.compare(id1, id2);
 		} catch (Exception ex) {
