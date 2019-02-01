@@ -35,7 +35,11 @@ public class ItemController {
 	@RequestMapping(value = "/item/borrow")
 	public @ResponseBody ResponseEntity<?> borrowItem(@RequestHeader(value="Authorization") String authorization, @RequestBody String body) {
 		if (authService.isValid(authorization)) {
-			return new ResponseEntity<>(HttpStatus.OK);
+			if(itemService.borrow(body)) {
+				return new ResponseEntity<>(HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.OK);
+			}	
 		}
 		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
