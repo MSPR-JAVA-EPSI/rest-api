@@ -1,8 +1,10 @@
 package fr.epsi.mspr.restapi.service;
 
+import org.springframework.http.ResponseEntity;
+
 public interface AuthService {
 
-	String authentificateImage(String result);
+	ResponseEntity<?> authentificateImage(String result);
 	
 	boolean isValid(String token);
 

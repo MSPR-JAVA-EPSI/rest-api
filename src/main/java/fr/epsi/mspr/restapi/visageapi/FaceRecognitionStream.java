@@ -58,9 +58,8 @@ public class FaceRecognitionStream {
 					return jsonObject.toString(2);
 				}
 			}
-		} catch (Exception e) {
-			// Display error message.
-			System.out.println(e.getMessage());
+		} catch (Exception ex) {
+			System.out.println(FaceComparaison.class.getName() + "> " + ex.getMessage());
 		}
 		return null;
 	}

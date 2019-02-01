@@ -3,6 +3,7 @@ package fr.epsi.mspr.restapi.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import fr.epsi.mspr.restapi.dao.entity.Item;
@@ -15,22 +16,22 @@ import fr.epsi.mspr.restapi.service.metier.dto.in.DtoInBorrowItems;
 public class ItemServiceImpl implements ItemService {
 
 	@Autowired
-	ItemRepository<Item> itemRepository;
+	private ItemRepository<Item> itemRepository;
 	@Autowired
-	JsonService jsonService;
+	private JsonService jsonService;
 	
 	public List<Item> getAll() {
 		return itemRepository.findAll();
 	}
 
 	@Override
-	public boolean borrow(String data) {
+	public HttpStatus borrow(String data) {
 		DtoInBorrowItems dtoInBorrowItems = jsonService.getDtoInBorrowItems(data);
 		if(dtoInBorrowItems == null) {
 			System.out.println(this.getClass().getName() + "> bad json");
-			return false;
+			return HttpStatus.BAD_REQUEST;
 		}
-		return true;
+		return HttpStatus.OK;
 	}
 
 }

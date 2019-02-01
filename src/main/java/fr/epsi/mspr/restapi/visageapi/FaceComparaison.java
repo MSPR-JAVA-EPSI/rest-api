@@ -50,8 +50,8 @@ public class FaceComparaison {
 					return jsonObject.getBoolean("isIdentical");
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+			System.out.println(FaceComparaison.class.getName() + "> " + ex.getMessage());
 		}
 		return false;
 	}
