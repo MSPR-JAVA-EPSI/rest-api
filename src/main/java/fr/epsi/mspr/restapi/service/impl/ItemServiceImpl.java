@@ -31,8 +31,8 @@ public class ItemServiceImpl implements ItemService {
 			System.out.println(this.getClass().getName() + "> bad json");
 			return HttpStatus.BAD_REQUEST;
 		}
-		System.out.println(this.getClass().getName() + "> " + dtoInBorrowItems.getItems().size());
-		for (Item item : dtoInBorrowItems.getItems()) {
+		System.out.println(this.getClass().getName() + "> " + dtoInBorrowItems.getEquipments().size());
+		for (Item item : dtoInBorrowItems.getEquipments()) {
 			System.out.println(this.getClass().getName() + "> " + item);
 		}
 		return HttpStatus.OK;

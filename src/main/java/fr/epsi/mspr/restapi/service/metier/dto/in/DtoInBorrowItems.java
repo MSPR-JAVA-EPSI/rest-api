@@ -7,13 +7,13 @@ import fr.epsi.mspr.restapi.dao.entity.Item;
 
 public class DtoInBorrowItems {
 
-	private List<Item> items = new ArrayList<>();
-	
-	public List<Item> getItems() {
-		return items;
+	private List<Item> equipments = new ArrayList<>();
+
+	public List<Item> getEquipments() {
+		return equipments;
 	}
-	
-	public void setItems(List<Item> items) {
-		this.items = items;
+
+	public void setEquipments(List<Item> equipments) {
+		this.equipments = equipments;
 	}
 }
