@@ -40,11 +40,11 @@ public class AuthServiceImpl implements AuthService {
 			return null;
 		}
 		if(visageApiService.isValidUser(identification, guardian)) {
-			System.out.println(this.getClass().getName() + "> api not ok");
-			return null;
+			guardian.setGuaToken(UUID.randomUUID().toString());
+			guardianRepository.save(guardian);
+			return guardian.getGuaToken();
 		}
-		guardian.setGuaToken(UUID.randomUUID().toString());
-		guardianRepository.save(guardian);
-		return guardian.getGuaToken();
+		System.out.println(this.getClass().getName() + "> api not ok");
+		return null;
 	}
 }
