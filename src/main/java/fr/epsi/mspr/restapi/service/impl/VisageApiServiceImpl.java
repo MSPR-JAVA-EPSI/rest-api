@@ -4,11 +4,11 @@ import java.util.Base64;
 
 import org.springframework.stereotype.Service;
 
-import fr.epsi.mspr.restapi.amazonapi.FaceComparaison;
-import fr.epsi.mspr.restapi.amazonapi.FaceRecognitionStream;
 import fr.epsi.mspr.restapi.dao.entity.Guardian;
 import fr.epsi.mspr.restapi.service.VisageApiService;
 import fr.epsi.mspr.restapi.service.metier.dto.in.DtoInIdentification;
+import fr.epsi.mspr.restapi.visageapi.FaceComparaison;
+import fr.epsi.mspr.restapi.visageapi.FaceRecognitionStream;
 
 @Service
 public class VisageApiServiceImpl implements VisageApiService {
