@@ -30,7 +30,7 @@ public class ItemServiceImpl implements ItemService {
 		DtoInBorrowItems dtoInBorrowItems = jsonService.getDtoInBorrowItems(data);
 		if(dtoInBorrowItems == null) {
 			System.out.println(this.getClass().getName() + "> bad json");
-			new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
 		}
 		System.out.println(this.getClass().getName() + "> " + dtoInBorrowItems.getEquipments().size());
 		for (Item item : dtoInBorrowItems.getEquipments()) {

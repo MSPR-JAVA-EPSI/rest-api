@@ -35,12 +35,12 @@ public class AuthServiceImpl implements AuthService {
 		DtoInIdentification identification = jsonService.getDtoInIdentification(data);
 		if(identification == null) {
 			System.out.println(this.getClass().getName() + "> bad json");
-			new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
 		}
 		Guardian guardian = guardianRepository.findByGuaName(identification.getIdentifier());
 		if(guardian == null) {
 			System.out.println(this.getClass().getName() + "> guardian not found");
-			new ResponseEntity<>("Ce gardien est introuvable", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("Ce gardien est introuvable", HttpStatus.NO_CONTENT);
 		}
 		if(visageApiService.isValidUser(identification, guardian)) {
 			guardian.setGuaToken(UUID.randomUUID().toString());

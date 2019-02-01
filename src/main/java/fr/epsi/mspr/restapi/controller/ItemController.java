@@ -39,4 +39,12 @@ public class ItemController {
 		}
 		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
+	
+	@RequestMapping(value = "/item/getBorrow")
+	public @ResponseBody ResponseEntity<?> getBorrow(@RequestHeader(value="Authorization") String authorization, @RequestBody String body) {
+		if (authService.isValid(authorization)) {
+			return ResponseEntity.ok(new DtoOutEquipment().setEquipments(itemService.getAll()));
+		}
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+	}
 }
