@@ -25,7 +25,7 @@ public class ItemController {
 	private AuthService authService;
 
 	@RequestMapping(value = "/item/getAll", produces = { MediaType.APPLICATION_JSON })
-	public @ResponseBody ResponseEntity<?> getAll(@RequestHeader(value="Authorization") String authorization, @RequestBody String body) {
+	public @ResponseBody ResponseEntity<?> getAll(@RequestHeader(value="Authorization") String authorization) {
 		if (authService.isValid(authorization)) {
 			return ResponseEntity.ok(new DtoOutEquipment().setEquipments(itemService.getAll()));
 		}
@@ -41,7 +41,7 @@ public class ItemController {
 	}
 	
 	@RequestMapping(value = "/item/getBorrow")
-	public @ResponseBody ResponseEntity<?> getBorrow(@RequestHeader(value="Authorization") String authorization, @RequestBody String body) {
+	public @ResponseBody ResponseEntity<?> getBorrow(@RequestHeader(value="Authorization") String authorization) {
 		if (authService.isValid(authorization)) {
 			return ResponseEntity.ok(new DtoOutEquipment().setEquipments(itemService.getAll()));
 		}
