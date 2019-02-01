@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import fr.epsi.mspr.restapi.dao.entity.Item;
@@ -25,17 +26,17 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public HttpStatus borrow(String data) {
+	public ResponseEntity<?> borrow(String data) {
 		DtoInBorrowItems dtoInBorrowItems = jsonService.getDtoInBorrowItems(data);
 		if(dtoInBorrowItems == null) {
 			System.out.println(this.getClass().getName() + "> bad json");
-			return HttpStatus.BAD_REQUEST;
+			new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
 		}
 		System.out.println(this.getClass().getName() + "> " + dtoInBorrowItems.getEquipments().size());
 		for (Item item : dtoInBorrowItems.getEquipments()) {
 			System.out.println(this.getClass().getName() + "> " + item);
 		}
-		return HttpStatus.OK;
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }
