@@ -35,13 +35,13 @@ public class BorrowServiceImpl implements BorrowService {
 			return new ResponseEntity<>("Liste d'équipement inexistant", HttpStatus.NO_CONTENT);
 		}
 		for (Item item : dtoInBorrowItems.getEquipments()) {
-			Borrow b = getBorrowForItem(item, guardian.getBorrow());
-			b.setGuardian(guardian);
+			Borrow b = getBorrowForItem(item, guardian);
 			b.setItem(item);
 			b.addQuantity(item.getQuantity());
-			guardian.addBorrow(b);
 		}
-		guardianRepository.save(guardian);
+		if(guardianRepository.save(guardian) == null) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
@@ -71,24 +71,26 @@ public class BorrowServiceImpl implements BorrowService {
 			return new ResponseEntity<>("Liste d'équipement inexistant", HttpStatus.NO_CONTENT);
 		}
 		for (Item item : dtoInBorrowItems.getEquipments()) {
-			Borrow b = getBorrowForItem(item, guardian.getBorrow());
-			b.setGuardian(guardian);
-			b.setItem(item);
-			b.removeQuantity(item.getQuantity());
-			guardian.addBorrow(b);
+			for (Borrow borrow : guardian.getBorrow()) {
+				if(borrow.getItem().getId() == item.getId()) {
+					borrow.removeQuantity(item.getQuantity());
+					break;
+				}
+			}
 		}
 		guardianRepository.save(guardian);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	private Borrow getBorrowForItem(Item item, Set<Borrow> borrows) {
+	private Borrow getBorrowForItem(Item item, Guardian guardian) {
 		Borrow b = new Borrow();
-		for (Borrow borrow : borrows) {
+		for (Borrow borrow : guardian.getBorrow()) {
 			if(borrow.getItem().getId() == item.getId()) {
 				b = borrow;
 				break;
 			}
 		}
+		guardian.addBorrow(b);
 		return b;
 	}
 }

@@ -71,6 +71,7 @@ public class Guardian implements Serializable {
 		this.borrow = borrow;
 	}
 	public void addBorrow(Borrow b) {
+		b.setGuardian(this);
 		borrow.add(b);
 	}	
 	
