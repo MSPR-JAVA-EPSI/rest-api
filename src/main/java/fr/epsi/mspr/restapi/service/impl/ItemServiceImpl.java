@@ -1,5 +1,6 @@
 package fr.epsi.mspr.restapi.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,6 @@ import fr.epsi.mspr.restapi.dao.repository.ItemRepository;
 import fr.epsi.mspr.restapi.service.ItemService;
 import fr.epsi.mspr.restapi.service.JsonService;
 import fr.epsi.mspr.restapi.service.metier.dto.DtoEquipment;
-import fr.epsi.mspr.restapi.service.metier.dto.DtoItem;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -26,24 +26,6 @@ public class ItemServiceImpl implements ItemService {
 	private JsonService jsonService;
 	@Autowired
 	private BorrowRepository borrowRepository;
-
-	@Override
-	public ResponseEntity<?> addNew(String result) {
-		DtoItem dtoItem = jsonService.getDtoItem(result);
-		if(dtoItem == null || dtoItem.getItem() == null) {
-			System.out.println(this.getClass().getName() + "> bad json");
-			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
-		}
-		if(!checkItemIsValid(dtoItem.getItem())) {
-			return new ResponseEntity<>("Données invalides", HttpStatus.PARTIAL_CONTENT);
-		}
-		dtoItem.getItem().setId(0);
-		Item resultItem = itemRepository.save(dtoItem.getItem());
-		if(resultItem == null) {
-			return new ResponseEntity<>("Ajout impossible en base", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
 	
 	private boolean checkItemIsValid(Item item) {
 		final String name = item.getName();
@@ -77,21 +59,22 @@ public class ItemServiceImpl implements ItemService {
 		}
 		return ResponseEntity.ok(new DtoEquipment().setEquipments(items));
 	}
-
+	
 	@Override
-	public ResponseEntity<?> remove(String result) {
+	public ResponseEntity<?> addNew(String result) {
 		DtoEquipment dtoEquipment = jsonService.getDtoEquipment(result);
 		if(dtoEquipment == null || dtoEquipment.getEquipments() == null) {
 			System.out.println(this.getClass().getName() + "> bad json");
 			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
 		}
-		for(Item receivedItem : dtoEquipment.getEquipments()) {
-			Optional<Item> optionamItem = itemRepository.findById(receivedItem.getId());
-			if(optionamItem.isPresent()) {
-				Item item = optionamItem.get();
-				itemRepository.delete(item);
+		List<Item> toSave = new ArrayList<>();
+		for(Item item : dtoEquipment.getEquipments()) {
+			if(checkItemIsValid(item)) {
+				item.setId(0);
+				toSave.add(item);
 			}
 		}
+		itemRepository.saveAll(toSave);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
@@ -102,15 +85,35 @@ public class ItemServiceImpl implements ItemService {
 			System.out.println(this.getClass().getName() + "> bad json");
 			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
 		}
+		List<Item> toEdit = new ArrayList<>();
 		for(Item receivedItem : dtoEquipment.getEquipments()) {
 			Optional<Item> optionamItem = itemRepository.findById(receivedItem.getId());
 			if(optionamItem.isPresent()) {
 				Item item = optionamItem.get();
 				item.setName(receivedItem.getName());
 				item.setQuantity(receivedItem.getQuantity());
-				itemRepository.save(item);
+				toEdit.add(item);
 			}
 		}
+		itemRepository.saveAll(toEdit);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@Override
+	public ResponseEntity<?> remove(String result) {
+		DtoEquipment dtoEquipment = jsonService.getDtoEquipment(result);
+		if(dtoEquipment == null || dtoEquipment.getEquipments() == null) {
+			System.out.println(this.getClass().getName() + "> bad json");
+			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
+		}
+		List<Item> toDelete = new ArrayList<>();
+		for(Item receivedItem : dtoEquipment.getEquipments()) {
+			Optional<Item> option = itemRepository.findById(receivedItem.getId());
+			if(option.isPresent()) {
+				toDelete.add(option.get());
+			}
+		}
+		itemRepository.deleteAll(toDelete);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

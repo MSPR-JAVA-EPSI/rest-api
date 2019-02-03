@@ -1,6 +1,8 @@
 package fr.epsi.mspr.restapi.service.impl;
 
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import fr.epsi.mspr.restapi.dao.entity.Guardian;
-import fr.epsi.mspr.restapi.dao.entity.Item;
 import fr.epsi.mspr.restapi.dao.repository.GuardianRepository;
 import fr.epsi.mspr.restapi.service.GuardianService;
 import fr.epsi.mspr.restapi.service.JsonService;
@@ -52,14 +53,16 @@ public class GuardianServiceImpl implements GuardianService {
 			System.out.println(this.getClass().getName() + "> bad json");
 			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
 		}
+		List<Guardian> toSave = new ArrayList<>();
 		for(Guardian guardian : dtoGuardian.getGuardians()) {
 			if(guardian.getImageBase64()!=null && guardian.getName()!=null) {
 				byte[] bytes = Base64.getDecoder().decode(guardian.getImageBase64().getBytes());
 				guardian.setImage(bytes);
 				guardian.setId(0);
-				guardianRepository.save(guardian);
+				toSave.add(guardian);
 			}
 		}
+		guardianRepository.saveAll(toSave);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
@@ -70,6 +73,7 @@ public class GuardianServiceImpl implements GuardianService {
 			System.out.println(this.getClass().getName() + "> bad json");
 			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
 		}
+		List<Guardian> toEdit = new ArrayList<>();
 		for(Guardian receivedGuardian : dtoGuardian.getGuardians()) {
 			if(receivedGuardian.getImageBase64()!=null && receivedGuardian.getName()!=null) {
 				Optional<Guardian> option = guardianRepository.findById(receivedGuardian.getId());
@@ -78,10 +82,11 @@ public class GuardianServiceImpl implements GuardianService {
 					guardian.setAdministrator(receivedGuardian.isAdministrator());
 					guardian.setName(receivedGuardian.getName());
 					guardian.setImage(Base64.getDecoder().decode(receivedGuardian.getImageBase64().getBytes()));
-					guardianRepository.save(guardian);
+					toEdit.add(guardian);
 				}
 			}
 		}
+		guardianRepository.saveAll(toEdit);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
@@ -92,13 +97,14 @@ public class GuardianServiceImpl implements GuardianService {
 			System.out.println(this.getClass().getName() + "> bad json");
 			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
 		}
+		List<Guardian> toDelete = new ArrayList<>();
 		for(Guardian receivedGuardian : dtoGuardian.getGuardians()) {
 			Optional<Guardian> option = guardianRepository.findById(receivedGuardian.getId());
 			if(option.isPresent()) {
-				Guardian guardian = option.get();
-				guardianRepository.delete(guardian);
+				toDelete.add(option.get());
 			}
 		}
+		guardianRepository.deleteAll(toDelete);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import fr.epsi.mspr.restapi.service.JsonService;
 import fr.epsi.mspr.restapi.service.metier.dto.DtoEquipment;
 import fr.epsi.mspr.restapi.service.metier.dto.DtoGuardian;
-import fr.epsi.mspr.restapi.service.metier.dto.DtoItem;
 import fr.epsi.mspr.restapi.service.metier.dto.DtoToken;
 import fr.epsi.mspr.restapi.service.metier.dto.in.DtoInBorrowItems;
 import fr.epsi.mspr.restapi.service.metier.dto.in.DtoInIdentification;
@@ -36,12 +35,6 @@ public class JsonServiceImpl implements JsonService {
 	@Override
 	public DtoInBorrowItems getDtoInBorrowItems(String data) {
 		try { return gson.fromJson(data, DtoInBorrowItems.class);
-		} catch(Exception ex) {return null;}
-	}
-
-	@Override
-	public DtoItem getDtoItem(String data) {
-		try { return gson.fromJson(data, DtoItem.class);
 		} catch(Exception ex) {return null;}
 	}
 
