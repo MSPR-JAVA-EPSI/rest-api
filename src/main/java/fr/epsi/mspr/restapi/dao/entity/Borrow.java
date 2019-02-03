@@ -65,6 +65,11 @@ public class Borrow implements Serializable {
 	public void addQuantity(int i) {
 		quantity += i;
 	}
+	
+	public void removeQuantity(int i) {
+		quantity -= i;
+		if(quantity < 0) quantity = 0;
+	}
 
 	@PrePersist
 	private void prePersiste() {

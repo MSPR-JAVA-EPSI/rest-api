@@ -39,6 +39,9 @@ public class Item implements Serializable {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	public void removeQuantity(int i) {
+		quantity -= i;
+	}
 	
 	@Override
 	public int hashCode() {

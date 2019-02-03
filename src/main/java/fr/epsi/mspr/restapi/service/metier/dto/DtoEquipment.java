@@ -1,10 +1,10 @@
-package fr.epsi.mspr.restapi.service.metier.dto.out;
+package fr.epsi.mspr.restapi.service.metier.dto;
 
 import java.util.List;
 
 import fr.epsi.mspr.restapi.dao.entity.Item;
 
-public class DtoOutEquipment {
+public class DtoEquipment {
 
 	
 	private List<Item> equipments;
@@ -13,7 +13,7 @@ public class DtoOutEquipment {
 		return equipments;
 	}
 
-	public DtoOutEquipment setEquipments(List<Item> equipments) {
+	public DtoEquipment setEquipments(List<Item> equipments) {
 		this.equipments = equipments;
 		return this;
 	}

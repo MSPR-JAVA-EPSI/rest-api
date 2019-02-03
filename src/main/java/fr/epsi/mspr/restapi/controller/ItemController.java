@@ -16,7 +16,7 @@ import fr.epsi.mspr.restapi.service.AuthService;
 import fr.epsi.mspr.restapi.service.BorrowService;
 import fr.epsi.mspr.restapi.service.GuardianService;
 import fr.epsi.mspr.restapi.service.ItemService;
-import fr.epsi.mspr.restapi.service.metier.dto.out.DtoOutEquipment;
+import fr.epsi.mspr.restapi.service.metier.dto.DtoEquipment;
 
 @RestController
 public class ItemController {
@@ -33,7 +33,7 @@ public class ItemController {
 	@RequestMapping(value = "/item/getAll", produces = { MediaType.APPLICATION_JSON })
 	public @ResponseBody ResponseEntity<?> getAll(@RequestHeader(value = "Authorization") String authorization) {
 		if (authService.isValid(authorization)) {
-			return ResponseEntity.ok(new DtoOutEquipment().setEquipments(itemService.getAll()));
+			return itemService.getAllAvailable();
 		}
 		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
