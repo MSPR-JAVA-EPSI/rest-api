@@ -16,7 +16,6 @@ import fr.epsi.mspr.restapi.service.AuthService;
 import fr.epsi.mspr.restapi.service.BorrowService;
 import fr.epsi.mspr.restapi.service.GuardianService;
 import fr.epsi.mspr.restapi.service.ItemService;
-import fr.epsi.mspr.restapi.service.metier.dto.DtoEquipment;
 
 @RestController
 public class ItemController {
