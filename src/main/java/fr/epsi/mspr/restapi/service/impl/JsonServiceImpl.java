@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 
 import fr.epsi.mspr.restapi.service.JsonService;
+import fr.epsi.mspr.restapi.service.metier.dto.DtoEquipment;
+import fr.epsi.mspr.restapi.service.metier.dto.DtoGuardian;
 import fr.epsi.mspr.restapi.service.metier.dto.DtoItem;
 import fr.epsi.mspr.restapi.service.metier.dto.DtoToken;
 import fr.epsi.mspr.restapi.service.metier.dto.in.DtoInBorrowItems;
@@ -40,6 +42,18 @@ public class JsonServiceImpl implements JsonService {
 	@Override
 	public DtoItem getDtoItem(String data) {
 		try { return gson.fromJson(data, DtoItem.class);
+		} catch(Exception ex) {return null;}
+	}
+
+	@Override
+	public DtoEquipment getDtoEquipment(String data) {
+		try { return gson.fromJson(data, DtoEquipment.class);
+		} catch(Exception ex) {return null;}
+	}
+
+	@Override
+	public DtoGuardian getDtoGuardian(String data) {
+		try { return gson.fromJson(data, DtoGuardian.class);
 		} catch(Exception ex) {return null;}
 	}
 }

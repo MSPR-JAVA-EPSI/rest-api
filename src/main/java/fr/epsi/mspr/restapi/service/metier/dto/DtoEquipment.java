@@ -6,7 +6,6 @@ import fr.epsi.mspr.restapi.dao.entity.Item;
 
 public class DtoEquipment {
 
-	
 	private List<Item> equipments;
 
 	public List<Item> getEquipments() {

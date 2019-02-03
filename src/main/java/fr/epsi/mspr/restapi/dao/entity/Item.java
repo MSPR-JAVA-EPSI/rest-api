@@ -38,6 +38,7 @@ public class Item implements Serializable {
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+		if(quantity < 0) quantity = 0;
 	}
 	public void removeQuantity(int i) {
 		quantity -= i;

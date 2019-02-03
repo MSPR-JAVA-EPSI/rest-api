@@ -27,6 +27,7 @@ public class Guardian implements Serializable {
 	@Lob
 	@Column(name="guardian_image")
 	private byte[] image;
+	private String imageBase64;
 	@Column(name="guardian_token")
 	private String token;
 	@Column(name="guardian_admin")
@@ -52,6 +53,12 @@ public class Guardian implements Serializable {
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
+	public String getImageBase64() {
+		return imageBase64;
+	}
+	public void setImage(String imageBase64) {
+		this.imageBase64 = imageBase64;
+	}
 	public String getToken() {
 		return token;
 	}
@@ -70,6 +77,9 @@ public class Guardian implements Serializable {
 	public void setBorrow(Set<Borrow> borrow) {
 		this.borrow = borrow;
 	}
+	public void addBorrow(Borrow b) {
+		borrow.add(b);
+	}	
 	
 	@Override
 	public int hashCode() {
@@ -110,7 +120,4 @@ public class Guardian implements Serializable {
 			return false;
 		return true;
 	}
-	public void addBorrow(Borrow b) {
-		borrow.add(b);
-	}	
 }

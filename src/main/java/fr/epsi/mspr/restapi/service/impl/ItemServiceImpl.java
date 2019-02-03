@@ -1,6 +1,7 @@
 package fr.epsi.mspr.restapi.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -79,13 +80,37 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public ResponseEntity<?> remove(String result) {
-		// TODO Auto-generated method stub
-		return null;
+		DtoEquipment dtoEquipment = jsonService.getDtoEquipment(result);
+		if(dtoEquipment == null || dtoEquipment.getEquipments() == null) {
+			System.out.println(this.getClass().getName() + "> bad json");
+			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
+		}
+		for(Item receivedItem : dtoEquipment.getEquipments()) {
+			Optional<Item> optionamItem = itemRepository.findById(receivedItem.getId());
+			if(optionamItem.isPresent()) {
+				Item item = optionamItem.get();
+				itemRepository.delete(item);
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<?> edit(String result) {
-		// TODO Auto-generated method stub
-		return null;
+		DtoEquipment dtoEquipment = jsonService.getDtoEquipment(result);
+		if(dtoEquipment == null || dtoEquipment.getEquipments() == null) {
+			System.out.println(this.getClass().getName() + "> bad json");
+			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
+		}
+		for(Item receivedItem : dtoEquipment.getEquipments()) {
+			Optional<Item> optionamItem = itemRepository.findById(receivedItem.getId());
+			if(optionamItem.isPresent()) {
+				Item item = optionamItem.get();
+				item.setName(receivedItem.getName());
+				item.setQuantity(receivedItem.getQuantity());
+				itemRepository.save(item);
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
