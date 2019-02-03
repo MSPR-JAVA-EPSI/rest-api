@@ -20,7 +20,7 @@ public class VisageApiServiceImpl implements VisageApiService {
 			byte[] bytes = Base64.getDecoder().decode(identification.getImage().getBytes());
 			UUID uuid1 = FaceRecognitionStream.getFaceId(bytes);
 			if(uuid1 == null) return false;
-			UUID uuid2 = FaceRecognitionStream.getFaceId(guardian.getGuaImage());
+			UUID uuid2 = FaceRecognitionStream.getFaceId(guardian.getImage());
 			if(uuid2 == null) return false;
 			return FaceComparaison.compare(uuid1.toString(), uuid2.toString());
 		} catch (Exception ex) {

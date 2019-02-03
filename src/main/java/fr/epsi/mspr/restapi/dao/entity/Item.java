@@ -1,15 +1,15 @@
 package fr.epsi.mspr.restapi.dao.entity;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
-public class Item  implements Serializable {
+@Table(name = "item")
+public class Item implements Serializable {
 
 	private static final long serialVersionUID = 838937981809482869L;
 	
@@ -20,8 +20,6 @@ public class Item  implements Serializable {
 	private String name;
 	@Column(name="item_quantity")
 	private int quantity;
-	@OneToMany(mappedBy="item")
-	private Set<BorrowItem> borrowItems;
 	
 	public long getId() {
 		return id;
@@ -41,10 +39,35 @@ public class Item  implements Serializable {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public Set<BorrowItem> getBorrowItems() {
-		return borrowItems;
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + quantity;
+		return result;
 	}
-	public void setBorrowItems(Set<BorrowItem> borrowItems) {
-		this.borrowItems = borrowItems;
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Item other = (Item) obj;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (quantity != other.quantity)
+			return false;
+		return true;
 	}
 }

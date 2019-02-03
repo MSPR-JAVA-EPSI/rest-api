@@ -25,6 +25,6 @@ public class GuardianServiceImpl implements GuardianService {
 	
 	@Override
 	public Guardian getByToken(String token) {
-		return guardianRepository.findByGuaToken(token.split(" ")[1]);
+		return guardianRepository.findByToken(token.split(" ")[1]);
 	}
 }

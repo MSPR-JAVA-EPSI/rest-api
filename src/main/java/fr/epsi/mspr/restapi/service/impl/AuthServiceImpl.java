@@ -27,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
 	
 	@Override
 	public boolean isValid(String token) {
-		return guardianRepository.findByGuaToken(token.split(" ")[1]) != null;
+		return guardianRepository.findByToken(token.split(" ")[1]) != null;
 	}
 
 	@Override
@@ -37,16 +37,22 @@ public class AuthServiceImpl implements AuthService {
 			System.out.println(this.getClass().getName() + "> bad json");
 			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
 		}
-		Guardian guardian = guardianRepository.findByGuaName(identification.getId());
+		Guardian guardian = guardianRepository.findByName(identification.getId());
 		if(guardian == null) {
 			System.out.println(this.getClass().getName() + "> guardian not found");
 			return new ResponseEntity<>("Ce gardien est introuvable", HttpStatus.NO_CONTENT);
 		}
 		if(visageApiService.isValidUser(identification, guardian)) {
-			guardian.setGuaToken(UUID.randomUUID().toString());
+			guardian.setToken(UUID.randomUUID().toString());
 			guardianRepository.save(guardian);
-			return ResponseEntity.ok(new DtoToken(guardian.getGuaToken()));
+			return ResponseEntity.ok(new DtoToken(guardian.getToken()));
 		}
 		return new ResponseEntity<>("Aucune correspondance trouvée pour ce gardien", HttpStatus.NO_CONTENT);
+	}
+
+	@Override
+	public boolean isValidAndAdmin(String token) {
+		Guardian g = guardianRepository.findByToken(token.split(" ")[1]);
+		return g != null && g.isAdministrator();
 	}
 }

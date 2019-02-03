@@ -4,7 +4,7 @@ import fr.epsi.mspr.restapi.dao.entity.Guardian;
 
 public interface GuardianRepository extends CustomRepository<Guardian, Long> {
 
-	Guardian findByGuaToken(String guaToken);
+	Guardian findByToken(String guaToken);
 	
-	Guardian findByGuaName(String guaName);
+	Guardian findByName(String guaName);
 }

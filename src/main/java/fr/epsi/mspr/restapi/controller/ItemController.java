@@ -49,11 +49,19 @@ public class ItemController {
 
 	@RequestMapping(value = "/item/getBorrows", produces = { MediaType.APPLICATION_JSON })
 	public @ResponseBody ResponseEntity<?> getBorrow(@RequestHeader(value = "Authorization") String authorization) {
-		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+		Guardian guardian = guardianService.getByToken(authorization);
+		if (guardian == null) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		return borrowService.getBorrows(guardian);
 	}
 	
-	@RequestMapping(value = "/item/returnBorrow")
+	@RequestMapping(value = "/item/returnBorrows")
 	public @ResponseBody ResponseEntity<?> returnBorrow(@RequestHeader(value = "Authorization") String authorization, @RequestBody String body) {
-		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+		Guardian guardian = guardianService.getByToken(authorization);
+		if (guardian == null) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		return borrowService.returnBorrows(body, guardian);
 	}
 }

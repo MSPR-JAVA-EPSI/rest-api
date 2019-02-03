@@ -8,4 +8,6 @@ public interface AuthService {
 	
 	boolean isValid(String token);
 
+	boolean isValidAndAdmin(String authorization);
+
 }

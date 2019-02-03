@@ -1,63 +1,112 @@
 package fr.epsi.mspr.restapi.dao.entity;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "borrow")
 public class Borrow implements Serializable {
 
 	private static final long serialVersionUID = 6261766896435526999L;
-	
-	@Id
-	@Column(name="borrow_id")
-	private long id;
-	@Column(name="borrow_date")
-	private Date date;
-	@Column(name="borrow_guardian")
+
+	@EmbeddedId
+	private BorrowId id;
+	@ManyToOne()
+	@MapsId("guardianId")
+	@JoinColumn(name = "borrow_guardian", nullable = false, updatable = false, insertable = false)
 	private Guardian guardian;
-	@Column(name="borrow_return")
-	private boolean isReturn = false;
-	@OneToMany(mappedBy="borrow", cascade=CascadeType.ALL)
-	private Set<BorrowItem> borrowItems;
-	
-	public long getId() {
+	@ManyToOne()
+	@MapsId("itemId")
+	@JoinColumn(name = "borrow_item", nullable = false, updatable = false, insertable = false)
+	private Item item;
+	@Column(name = "borrow_quantity")
+	private int quantity = 0;
+
+	public BorrowId getId() {
 		return id;
 	}
-	public void setId(long id) {
+
+	public void setId(BorrowId id) {
 		this.id = id;
 	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
+
 	public Guardian getGuardian() {
 		return guardian;
 	}
+
 	public void setGuardian(Guardian guardian) {
 		this.guardian = guardian;
 	}
-	public boolean isReturn() {
-		return isReturn;
+
+	public Item getItem() {
+		return item;
 	}
-	public void setReturn(boolean isReturn) {
-		this.isReturn = isReturn;
+
+	public void setItem(Item item) {
+		this.item = item;
 	}
-	public Set<BorrowItem> getBorrowItems() {
-		return borrowItems;
+
+	public int getQuantity() {
+		return quantity;
 	}
-	public void setBorrowItems(Set<BorrowItem> borrowItems) {
-		this.borrowItems = borrowItems;
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
-	public void addBorrowItem(BorrowItem borrowItem) {
-		borrowItem.setBorrow(this);
+	
+	public void addQuantity(int i) {
+		quantity += i;
+	}
+
+	@PrePersist
+	private void prePersiste() {
+		if (getId() == null) {
+			BorrowId pk = new BorrowId();
+			pk.setBorrowGuardian(getGuardian().getId());
+			pk.setBorrowItem(getItem().getId());
+			setId(pk);
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((guardian == null) ? 0 : guardian.hashCode());
+		result = prime * result + ((item == null) ? 0 : item.hashCode());
+		result = prime * result + quantity;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Borrow other = (Borrow) obj;
+		if (guardian == null) {
+			if (other.guardian != null)
+				return false;
+		} else if (!guardian.equals(other.guardian))
+			return false;
+		if (item == null) {
+			if (other.item != null)
+				return false;
+		} else if (!item.equals(other.item))
+			return false;
+		if (quantity != other.quantity)
+			return false;
+		return true;
 	}
 }
