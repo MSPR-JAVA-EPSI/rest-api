@@ -42,6 +42,7 @@ public class Item implements Serializable {
 	}
 	public void removeQuantity(int i) {
 		quantity -= i;
+		if(quantity < 0) quantity = 0;
 	}
 	
 	@Override

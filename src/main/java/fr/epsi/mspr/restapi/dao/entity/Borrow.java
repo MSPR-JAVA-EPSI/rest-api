@@ -60,10 +60,12 @@ public class Borrow implements Serializable {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+		if(quantity < 0) quantity = 0;
 	}
 	
 	public void addQuantity(int i) {
 		quantity += i;
+		if(quantity < 0) quantity = 0;
 	}
 	
 	public void removeQuantity(int i) {
