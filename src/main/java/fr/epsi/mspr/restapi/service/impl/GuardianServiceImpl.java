@@ -15,6 +15,7 @@ import fr.epsi.mspr.restapi.dao.repository.GuardianRepository;
 import fr.epsi.mspr.restapi.service.GuardianService;
 import fr.epsi.mspr.restapi.service.JsonService;
 import fr.epsi.mspr.restapi.service.metier.dto.DtoGuardian;
+import fr.epsi.mspr.restapi.service.metier.dto.DtoGuardianEntity;
 
 @Service
 public class GuardianServiceImpl implements GuardianService {
@@ -42,8 +43,22 @@ public class GuardianServiceImpl implements GuardianService {
 	@Override
 	public ResponseEntity<?> getAll() {
 		DtoGuardian dto = new DtoGuardian();
-		dto.setGuardians(guardianRepository.findAll());
+		List<Guardian> guardians = guardianRepository.findAll();
+		List<DtoGuardianEntity> dtoGuardians = new ArrayList<>();
+		for(Guardian g : guardians) {
+			DtoGuardianEntity dtoGuardian = getDtoGuardianEntityFromGuardian(g);
+			dtoGuardians.add(dtoGuardian);
+		}
+		dto.setGuardians(dtoGuardians);
 		return ResponseEntity.ok(dto);
+	}
+
+	private DtoGuardianEntity getDtoGuardianEntityFromGuardian(Guardian g) {
+		DtoGuardianEntity dtoGuardian = new DtoGuardianEntity();
+		dtoGuardian.setAdministrator(g.isAdministrator());
+		dtoGuardian.setName(g.getName());
+		dtoGuardian.setId(g.getId());
+		return dtoGuardian;
 	}
 
 	@Override
@@ -54,11 +69,11 @@ public class GuardianServiceImpl implements GuardianService {
 			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
 		}
 		List<Guardian> toSave = new ArrayList<>();
-		for(Guardian guardian : dtoGuardian.getGuardians()) {
-			if(guardian.getImageBase64()!=null && guardian.getName()!=null) {
-				byte[] bytes = Base64.getDecoder().decode(guardian.getImageBase64().getBytes());
-				guardian.setImage(bytes);
-				guardian.setId(0);
+		for(DtoGuardianEntity receivedGuardian : dtoGuardian.getGuardians()) {
+			if(receivedGuardian.getImage() !=null && receivedGuardian.getName()!=null) {
+				Guardian guardian = new Guardian();
+				guardian.setName(receivedGuardian.getName());
+				guardian.setImage(Base64.getDecoder().decode(receivedGuardian.getImage().getBytes()));
 				toSave.add(guardian);
 			}
 		}
@@ -74,14 +89,14 @@ public class GuardianServiceImpl implements GuardianService {
 			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
 		}
 		List<Guardian> toEdit = new ArrayList<>();
-		for(Guardian receivedGuardian : dtoGuardian.getGuardians()) {
-			if(receivedGuardian.getImageBase64()!=null && receivedGuardian.getName()!=null) {
+		for(DtoGuardianEntity receivedGuardian : dtoGuardian.getGuardians()) {
+			if(receivedGuardian.getImage() !=null && receivedGuardian.getName()!=null) {
 				Optional<Guardian> option = guardianRepository.findById(receivedGuardian.getId());
 				if(option.isPresent()) {
 					Guardian guardian = option.get();
 					guardian.setAdministrator(receivedGuardian.isAdministrator());
 					guardian.setName(receivedGuardian.getName());
-					guardian.setImage(Base64.getDecoder().decode(receivedGuardian.getImageBase64().getBytes()));
+					guardian.setImage(Base64.getDecoder().decode(receivedGuardian.getImage().getBytes()));
 					toEdit.add(guardian);
 				}
 			}
@@ -98,7 +113,7 @@ public class GuardianServiceImpl implements GuardianService {
 			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
 		}
 		List<Guardian> toDelete = new ArrayList<>();
-		for(Guardian receivedGuardian : dtoGuardian.getGuardians()) {
+		for(DtoGuardianEntity receivedGuardian : dtoGuardian.getGuardians()) {
 			Optional<Guardian> option = guardianRepository.findById(receivedGuardian.getId());
 			if(option.isPresent()) {
 				toDelete.add(option.get());

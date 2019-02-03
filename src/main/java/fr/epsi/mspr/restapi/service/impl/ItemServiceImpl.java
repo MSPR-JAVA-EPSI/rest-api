@@ -53,7 +53,7 @@ public class ItemServiceImpl implements ItemService {
 		for (Item item : items) {
 			for(Borrow borrow : borrows) {
 				if(borrow.getItem().getId() == item.getId()) {
-					item.removeQuantity(borrow.getItem().getQuantity());
+					item.removeQuantity(borrow.getQuantity());
 				}
 			}
 		}
