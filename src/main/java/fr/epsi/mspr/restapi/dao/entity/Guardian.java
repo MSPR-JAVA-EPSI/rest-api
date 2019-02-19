@@ -34,7 +34,7 @@ public class Guardian implements Serializable {
 	private String token;
 	@Column(name="guardian_admin")
 	private boolean administrator;
-	@Column(name="guardian_admin")
+	@Column(name="guardian_fullname")
 	private String fullname;
 	@OneToMany( mappedBy="guardian", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Borrow> borrow;
