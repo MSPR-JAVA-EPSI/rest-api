@@ -34,8 +34,6 @@ public class Guardian implements Serializable {
 	private String token;
 	@Column(name="guardian_admin")
 	private boolean administrator;
-	@Column(name="guardian_fullname")
-	private String fullname;
 	@OneToMany( mappedBy="guardian", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Borrow> borrow;
 	
@@ -69,12 +67,6 @@ public class Guardian implements Serializable {
 	public void setAdministrator(boolean administrator) {
 		this.administrator = administrator;
 	}
-	public String getFullname() {
-		return fullname;
-	}
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
-	}
 	public Set<Borrow> getBorrow() {
 		return borrow;
 	}
@@ -84,15 +76,13 @@ public class Guardian implements Serializable {
 	public void addBorrow(Borrow b) {
 		b.setGuardian(this);
 		borrow.add(b);
-	}
+	}	
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (administrator ? 1231 : 1237);
-		result = prime * result + ((borrow == null) ? 0 : borrow.hashCode());
-		result = prime * result + ((fullname == null) ? 0 : fullname.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + Arrays.hashCode(image);
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -111,16 +101,6 @@ public class Guardian implements Serializable {
 		Guardian other = (Guardian) obj;
 		if (administrator != other.administrator)
 			return false;
-		if (borrow == null) {
-			if (other.borrow != null)
-				return false;
-		} else if (!borrow.equals(other.borrow))
-			return false;
-		if (fullname == null) {
-			if (other.fullname != null)
-				return false;
-		} else if (!fullname.equals(other.fullname))
-			return false;
 		if (id != other.id)
 			return false;
 		if (!Arrays.equals(image, other.image))
@@ -136,7 +116,5 @@ public class Guardian implements Serializable {
 		} else if (!token.equals(other.token))
 			return false;
 		return true;
-	}	
-	
-	
+	}
 }
