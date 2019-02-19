@@ -17,7 +17,7 @@ public class VisageApiServiceImpl implements VisageApiService {
 	@Override
 	public boolean isValidUser(DtoInIdentification identification, Guardian guardian) {
 		try {
-			byte[] bytes = Base64.getDecoder().decode(identification.getImage().getBytes());
+			byte[] bytes = Base64.getMimeDecoder().decode(identification.getImage().getBytes());
 			UUID uuid1 = FaceRecognitionStream.getFaceId(bytes);
 			if(uuid1 == null) return false;
 			UUID uuid2 = FaceRecognitionStream.getFaceId(guardian.getImage());
