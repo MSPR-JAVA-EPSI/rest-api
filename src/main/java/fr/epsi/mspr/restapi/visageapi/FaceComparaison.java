@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class FaceComparaison {
 	
-	private static final String subscriptionKey = "d87325fc69ec41bf85fdd87c7b2de574";
+	private static final String subscriptionKey = System.getenv().get("MSPR_MICROSOFT_API_KEY");
 	private static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/verify";
 	
 	public static boolean compare(String id1, String id2) {
