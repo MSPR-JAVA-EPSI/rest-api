@@ -1,4 +1,4 @@
-package fr.epsi.mspr.restapi.service.metier.dto.in;
+package fr.epsi.mspr.restapi.service.metier.dto;
 
 import java.util.ArrayList;
 import java.util.List;

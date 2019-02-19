@@ -1,5 +1,6 @@
 package fr.epsi.mspr.restapi.service.impl;
 
+import java.util.Base64;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,8 @@ import fr.epsi.mspr.restapi.dao.repository.GuardianRepository;
 import fr.epsi.mspr.restapi.service.AuthService;
 import fr.epsi.mspr.restapi.service.JsonService;
 import fr.epsi.mspr.restapi.service.VisageApiService;
+import fr.epsi.mspr.restapi.service.metier.dto.DtoInIdentification;
 import fr.epsi.mspr.restapi.service.metier.dto.DtoToken;
-import fr.epsi.mspr.restapi.service.metier.dto.in.DtoInIdentification;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -45,7 +46,8 @@ public class AuthServiceImpl implements AuthService {
 		if(visageApiService.isValidUser(identification, guardian)) {
 			guardian.setToken(UUID.randomUUID().toString());
 			guardianRepository.save(guardian);
-			return ResponseEntity.ok(new DtoToken(guardian.getToken()));
+			byte[] result = Base64.getEncoder().encode(guardian.getImage());
+			return ResponseEntity.ok(new DtoToken(guardian.getToken(), guardian.getFullname(), new String(result)));
 		}
 		return new ResponseEntity<>("Aucune correspondance trouvée pour ce gardien", HttpStatus.NO_CONTENT);
 	}

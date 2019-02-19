@@ -1,4 +1,4 @@
-package fr.epsi.mspr.restapi.service.metier.dto.in;
+package fr.epsi.mspr.restapi.service.metier.dto;
 
 public class DtoInIdentification {
 

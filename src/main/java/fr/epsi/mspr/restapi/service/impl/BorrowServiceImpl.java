@@ -13,7 +13,7 @@ import fr.epsi.mspr.restapi.dao.entity.Item;
 import fr.epsi.mspr.restapi.dao.repository.GuardianRepository;
 import fr.epsi.mspr.restapi.service.BorrowService;
 import fr.epsi.mspr.restapi.service.JsonService;
-import fr.epsi.mspr.restapi.service.metier.dto.in.DtoInBorrowItems;
+import fr.epsi.mspr.restapi.service.metier.dto.DtoInBorrowItems;
 
 @Service
 public class BorrowServiceImpl implements BorrowService {

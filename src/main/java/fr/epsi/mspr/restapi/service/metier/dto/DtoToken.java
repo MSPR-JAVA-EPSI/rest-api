@@ -4,9 +4,13 @@ public class DtoToken {
 
 	private String token;
 	private boolean administrator;
+	private String fullname;
+	private String image;
 
-	public DtoToken(String token) {
+	public DtoToken(String token, String fullname, String image) {
 		this.token = token;
+		this.fullname = fullname;
+		this.image = image;
 	}
 
 	public String getToken() {
@@ -24,4 +28,21 @@ public class DtoToken {
 	public void setAdministrator(boolean administrator) {
 		this.administrator = administrator;
 	}
+
+	public String getFullname() {
+		return fullname;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
 }
