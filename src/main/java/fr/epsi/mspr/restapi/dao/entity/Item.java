@@ -1,12 +1,15 @@
 package fr.epsi.mspr.restapi.dao.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,31 +26,47 @@ public class Item implements Serializable {
 	private String name;
 	@Column(name="item_quantity")
 	private int quantity;
+	@OneToMany( mappedBy="item", fetch = FetchType.EAGER, orphanRemoval=true)
+	private Set<Borrow> borrow;
+	
 	
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public int getQuantity() {
 		return quantity;
 	}
+
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
-		if(quantity < 0) quantity = 0;
 	}
+
+	public Set<Borrow> getBorrow() {
+		return borrow;
+	}
+
+	public void setBorrow(Set<Borrow> borrow) {
+		this.borrow = borrow;
+	}
+
 	public void removeQuantity(int i) {
 		quantity -= i;
 		if(quantity < 0) quantity = 0;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -57,7 +76,7 @@ public class Item implements Serializable {
 		result = prime * result + quantity;
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

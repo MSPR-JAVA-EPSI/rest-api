@@ -110,14 +110,6 @@ public class ItemServiceImpl implements ItemService {
 		for(Item receivedItem : dtoEquipment.getEquipments()) {
 			Optional<Item> option = itemRepository.findById(receivedItem.getId());
 			if(option.isPresent()) {
-				List<Borrow> borrowList = borrowRepository.findAll();
-				List<Borrow> toDeleteItemCascade = new ArrayList<>();
-				for(Borrow borrow : borrowList) {
-					if(borrow.getItem().getId() == option.get().getId()) {
-						toDeleteItemCascade.add(borrow);
-					}
-				}
-				borrowRepository.deleteAll(toDeleteItemCascade);
 				toDelete.add(option.get());
 			}
 		}

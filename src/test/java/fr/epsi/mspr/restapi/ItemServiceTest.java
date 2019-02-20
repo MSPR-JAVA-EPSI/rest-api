@@ -35,7 +35,7 @@ public class ItemServiceTest {
 	}
 
 	@Test
-	public void addItems() {
+	public void OneAddItems() {
 		DtoEquipment dtoEquipment = new DtoEquipment();
 		Item item = new Item();
 		item.setName("Banane");
@@ -45,7 +45,7 @@ public class ItemServiceTest {
 	}
 
 	@Test
-	public void editItems() {
+	public void TwoEditItems() {
 		DtoEquipment dtoEquipment = new DtoEquipment();
 		List<Item> itemList = itemRepository.findAll();
 		if (itemList.size() > 0) {
@@ -60,7 +60,7 @@ public class ItemServiceTest {
 	}
 
 	@Test
-	public void removeItems() {
+	public void ThreeRemoveItems() {
 		DtoEquipment dtoEquipment = new DtoEquipment();
 		List<Item> itemList = itemRepository.findAll();
 		if (itemList.size() > 0) {

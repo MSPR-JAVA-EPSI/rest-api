@@ -15,7 +15,7 @@ import fr.epsi.mspr.restapi.dao.entity.Guardian;
 import fr.epsi.mspr.restapi.dao.entity.Item;
 import fr.epsi.mspr.restapi.dao.repository.GuardianRepository;
 import fr.epsi.mspr.restapi.dao.repository.ItemRepository;
-import fr.epsi.mspr.restapi.service.impl.BorrowServiceImpl;
+import fr.epsi.mspr.restapi.service.BorrowService;
 import fr.epsi.mspr.restapi.service.metier.dto.DtoEquipment;
 
 @RunWith(SpringRunner.class)
@@ -23,7 +23,7 @@ import fr.epsi.mspr.restapi.service.metier.dto.DtoEquipment;
 public class BorrowServiceTest {
 
 	@Autowired
-	private BorrowServiceImpl borrowServiceImpl;
+	private BorrowService borrowService;
 	@Autowired
 	private GuardianRepository guardianRepository;
 	@Autowired
@@ -38,15 +38,20 @@ public class BorrowServiceTest {
 		item.setName("salut");
 		dto.addEquipment(item);
 		Guardian g = guardianRepository.findById(3l).get();
-		borrowServiceImpl.borrow(gson.toJson(dto), g);
-		System.out.println(gson.toJson(dto));
-		//assertEquals(200, borrowServiceImpl.returnBorrows(gson.toJson(dto), g).getStatusCodeValue());
+		borrowService.borrow(gson.toJson(dto), g);
+		assertEquals(200, borrowService.returnBorrows(gson.toJson(dto), g).getStatusCodeValue());
 	}
 	
 	@Test
 	public void borrowListTest() {
 		Guardian g = guardianRepository.findById(3l).get();
-		ResponseEntity<?> result = borrowServiceImpl.getBorrows(g);
+		ResponseEntity<?> result = borrowService.getBorrows(g);
 		assertEquals(200, result.getStatusCodeValue());
+	}
+	
+	@Test
+	public void testRemoveItemWhenBorrow() {
+		//guardianRepository.deleteById(100l);
+		itemRepository.deleteById(100l);
 	}
 }
