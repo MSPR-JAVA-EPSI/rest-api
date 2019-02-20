@@ -28,7 +28,9 @@ public class AuthServiceImpl implements AuthService {
 	
 	@Override
 	public boolean isValid(String token) {
-		return guardianRepository.findByToken(token.split(" ")[1]) != null;
+		String[] data = token.split(" ");
+		if(data.length != 2) return false;
+		return guardianRepository.findByToken(data[1]) != null;
 	}
 
 	@Override
