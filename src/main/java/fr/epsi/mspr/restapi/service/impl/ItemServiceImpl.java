@@ -48,7 +48,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public ResponseEntity<?> getAllAvailable() {
-		List<Item> items = itemRepository.findAll();
+		List<Item> items = itemRepository.findAllByEnable(true);
 		List<Borrow> borrows = borrowRepository.findAll();
 		for (Item item : items) {
 			for(Borrow borrow : borrows) {
@@ -57,7 +57,8 @@ public class ItemServiceImpl implements ItemService {
 				}
 			}
 		}
-		return ResponseEntity.ok(new DtoEquipment().setEquipments(items));
+		List<Item> availableItems = new ArrayList<>();
+		return ResponseEntity.ok(new DtoEquipment().setEquipments(availableItems));
 	}
 	
 	@Override
@@ -71,6 +72,7 @@ public class ItemServiceImpl implements ItemService {
 		for(Item item : dtoEquipment.getEquipments()) {
 			if(checkItemIsValid(item)) {
 				item.setId(0);
+				item.setEnable(true);
 				toSave.add(item);
 			}
 		}
@@ -87,9 +89,9 @@ public class ItemServiceImpl implements ItemService {
 		}
 		List<Item> toEdit = new ArrayList<>();
 		for(Item receivedItem : dtoEquipment.getEquipments()) {
-			Optional<Item> optionamItem = itemRepository.findById(receivedItem.getId());
-			if(optionamItem.isPresent()) {
-				Item item = optionamItem.get();
+			Optional<Item> optionalItem = itemRepository.findById(receivedItem.getId());
+			if(optionalItem.isPresent()) {
+				Item item = optionalItem.get();
 				item.setName(receivedItem.getName());
 				item.setQuantity(receivedItem.getQuantity());
 				toEdit.add(item);
@@ -106,14 +108,16 @@ public class ItemServiceImpl implements ItemService {
 			System.out.println(this.getClass().getName() + "> bad json");
 			return new ResponseEntity<>("Mauvais format JSON", HttpStatus.BAD_REQUEST);
 		}
-		List<Item> toDelete = new ArrayList<>();
+		List<Item> toEdit = new ArrayList<>();
 		for(Item receivedItem : dtoEquipment.getEquipments()) {
-			Optional<Item> option = itemRepository.findById(receivedItem.getId());
-			if(option.isPresent()) {
-				toDelete.add(option.get());
+			Optional<Item> optionalItem = itemRepository.findById(receivedItem.getId());
+			if(optionalItem.isPresent()) {
+				Item item = optionalItem.get();
+				item.setEnable(false);
+				toEdit.add(item);
 			}
 		}
-		itemRepository.deleteAll(toDelete);
+		itemRepository.saveAll(toEdit);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

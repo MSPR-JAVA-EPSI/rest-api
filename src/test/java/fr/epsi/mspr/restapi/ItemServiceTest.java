@@ -4,9 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -20,6 +23,7 @@ import fr.epsi.mspr.restapi.service.metier.dto.DtoEquipment;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ItemServiceTest {
 
 	@Autowired
@@ -35,7 +39,7 @@ public class ItemServiceTest {
 	}
 
 	@Test
-	public void OneAddItems() {
+	public void RunAs1_AddItems() {
 		DtoEquipment dtoEquipment = new DtoEquipment();
 		Item item = new Item();
 		item.setName("Banane");
@@ -45,13 +49,13 @@ public class ItemServiceTest {
 	}
 
 	@Test
-	public void TwoEditItems() {
+	public void RunAs2_EditItems() {
 		DtoEquipment dtoEquipment = new DtoEquipment();
 		List<Item> itemList = itemRepository.findAll();
 		if (itemList.size() > 0) {
 			Item item = itemList.get(itemList.size() - 1);
 			if ("Banane".equals(item.getName())) {
-				item.setName("Banane à la feuille !");
+				item.setName("Banana");
 				item.setQuantity(30);
 				dtoEquipment.addEquipment(item);
 				assertEquals(200, itemService.edit(json.toJson(dtoEquipment)).getStatusCodeValue());
@@ -60,12 +64,11 @@ public class ItemServiceTest {
 	}
 
 	@Test
-	public void ThreeRemoveItems() {
+	public void RunAs3_RemoveItems() {
 		DtoEquipment dtoEquipment = new DtoEquipment();
-		List<Item> itemList = itemRepository.findAll();
-		if (itemList.size() > 0) {
-			Item item = itemList.get(itemList.size() - 1);
-			dtoEquipment.addEquipment(item);
+		Optional<Item> oprionalItem = itemRepository.findByName("Banana");
+		if (oprionalItem.isPresent()) {
+			dtoEquipment.addEquipment(oprionalItem.get());
 			assertEquals(200, itemService.remove(json.toJson(dtoEquipment)).getStatusCodeValue());
 		}
 	}

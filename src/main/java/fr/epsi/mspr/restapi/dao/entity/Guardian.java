@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,7 +36,7 @@ public class Guardian implements Serializable {
 	private boolean administrator;
 	@Column(name="guardian_fullname")
 	private String fullname;
-	@OneToMany( mappedBy="item", fetch = FetchType.EAGER, orphanRemoval=true)
+	@OneToMany( mappedBy="guardian", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Borrow> borrow;
 	
 	public long getId() {
