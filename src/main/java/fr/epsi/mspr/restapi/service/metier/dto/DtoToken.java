@@ -7,8 +7,9 @@ public class DtoToken {
 	private String fullname;
 	private String image;
 
-	public DtoToken(String token, String fullname, String image) {
+	public DtoToken(String token, boolean administrator, String fullname, String image) {
 		this.token = token;
+		this.administrator = administrator;
 		this.fullname = fullname;
 		this.image = image;
 	}

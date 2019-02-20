@@ -47,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
 			guardian.setToken(UUID.randomUUID().toString());
 			guardianRepository.save(guardian);
 			byte[] result = Base64.getEncoder().encode(guardian.getImage());
-			return ResponseEntity.ok(new DtoToken(guardian.getToken(), guardian.getFullname(), new String(result)));
+			return ResponseEntity.ok(new DtoToken(guardian.getToken(), guardian.isAdministrator(), guardian.getFullname(), new String(result)));
 		}
 		return new ResponseEntity<>("Aucune correspondance trouvée pour ce gardien", HttpStatus.NO_CONTENT);
 	}
