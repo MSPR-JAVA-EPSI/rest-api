@@ -58,6 +58,7 @@ public class GuardianServiceImpl implements GuardianService {
 		dtoGuardian.setAdministrator(g.isAdministrator());
 		dtoGuardian.setName(g.getName());
 		dtoGuardian.setId(g.getId());
+		dtoGuardian.setFullname(g.getFullname());
 		return dtoGuardian;
 	}
 
@@ -96,6 +97,7 @@ public class GuardianServiceImpl implements GuardianService {
 					Guardian guardian = option.get();
 					guardian.setAdministrator(receivedGuardian.isAdministrator());
 					guardian.setName(receivedGuardian.getName());
+					guardian.setFullname(receivedGuardian.getFullname());
 					guardian.setImage(Base64.getDecoder().decode(receivedGuardian.getImage().getBytes()));
 					toEdit.add(guardian);
 				}

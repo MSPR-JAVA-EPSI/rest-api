@@ -4,9 +4,9 @@ public class DtoGuardianEntity {
 
 	private long id;
 	private String name;
+	private String fullname;
 	private String image;
 	private boolean administrator;
-	
 	public long getId() {
 		return id;
 	}
@@ -18,6 +18,12 @@ public class DtoGuardianEntity {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getFullname() {
+		return fullname;
+	}
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
 	}
 	public String getImage() {
 		return image;
