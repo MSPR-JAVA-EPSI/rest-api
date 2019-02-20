@@ -74,6 +74,7 @@ public class GuardianServiceImpl implements GuardianService {
 			if(receivedGuardian.getImage() !=null && receivedGuardian.getName()!=null) {
 				Guardian guardian = new Guardian();
 				guardian.setName(receivedGuardian.getName());
+				guardian.setFullname(receivedGuardian.getFullname());
 				guardian.setImage(Base64.getDecoder().decode(receivedGuardian.getImage().getBytes()));
 				toSave.add(guardian);
 			}
