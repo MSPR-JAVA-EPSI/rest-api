@@ -48,10 +48,4 @@ public class BorrowServiceTest {
 		ResponseEntity<?> result = borrowService.getBorrows(g);
 		assertEquals(200, result.getStatusCodeValue());
 	}
-	
-	@Test
-	public void testRemoveItemWhenBorrow() {
-		//guardianRepository.deleteById(100l);
-		itemRepository.deleteById(100l);
-	}
 }
