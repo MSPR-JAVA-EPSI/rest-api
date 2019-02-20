@@ -36,8 +36,18 @@ public class BorrowServiceImpl implements BorrowService {
 		}
 		for (Item item : dtoInBorrowItems.getEquipments()) {
 			System.out.println(getClass().getName() + "> try to borrow item " + item.getId());
-			Borrow b = getBorrowForItem(item, guardian);
-			b.setItem(item);
+			Borrow b = null;
+			for (Borrow borrow : guardian.getBorrow()) {
+				if(borrow.getItem().getId() == item.getId()) {
+					b = borrow;
+					break;
+				}
+			}
+			if(b == null) {
+				b = new Borrow();
+				guardian.addBorrow(b);
+				b.setItem(item);
+			}
 			b.addQuantity(item.getQuantity());
 			System.out.println(getClass().getName() + "> add quantity : " + item.getQuantity());
 		}
@@ -83,17 +93,5 @@ public class BorrowServiceImpl implements BorrowService {
 		}
 		guardianRepository.save(guardian);
 		return new ResponseEntity<>(HttpStatus.OK);
-	}
-	
-	private Borrow getBorrowForItem(Item item, Guardian guardian) {
-		Borrow b = new Borrow();
-		for (Borrow borrow : guardian.getBorrow()) {
-			if(borrow.getItem().getId() == item.getId()) {
-				b = borrow;
-				break;
-			}
-		}
-		if(b.getGuardian() == null) guardian.addBorrow(b);
-		return b;
 	}
 }
