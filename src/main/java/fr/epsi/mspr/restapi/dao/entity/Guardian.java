@@ -36,7 +36,7 @@ public class Guardian implements Serializable {
 	private boolean administrator;
 	@Column(name="guardian_fullname")
 	private String fullname;
-	@OneToMany( mappedBy="guardian", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@OneToMany( mappedBy="guardian", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	private Set<Borrow> borrow;
 	
 	public long getId() {
