@@ -26,9 +26,8 @@ public class Item implements Serializable {
 	private String name;
 	@Column(name="item_quantity")
 	private int quantity;
-	@OneToMany( mappedBy="item", targetEntity=Borrow.class, fetch = FetchType.EAGER, orphanRemoval=true)
+	@OneToMany( mappedBy="item", fetch = FetchType.LAZY, orphanRemoval=true)
 	private Set<Borrow> borrow;
-	
 	
 	public long getId() {
 		return id;

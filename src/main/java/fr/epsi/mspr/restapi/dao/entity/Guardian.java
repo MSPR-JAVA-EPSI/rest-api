@@ -35,7 +35,7 @@ public class Guardian implements Serializable {
 	private boolean administrator;
 	@Column(name="guardian_fullname")
 	private String fullname;
-	@OneToMany( mappedBy="item", targetEntity=Borrow.class, fetch = FetchType.EAGER, orphanRemoval=true)
+	@OneToMany( mappedBy="item", fetch = FetchType.EAGER, orphanRemoval=true)
 	private Set<Borrow> borrow;
 	
 	public long getId() {
