@@ -27,13 +27,13 @@ public class ItemServiceTest {
 	@Autowired
 	private ItemService itemService;
 	private Gson json = new Gson();
-	
+
 	@Test
 	public void getAllItemTest() {
 		List<Item> list = itemRepository.findAll();
 		assertNotEquals(0, list.size());
 	}
-	
+
 	@Test
 	public void addItems() {
 		DtoEquipment dtoEquipment = new DtoEquipment();
@@ -43,24 +43,30 @@ public class ItemServiceTest {
 		dtoEquipment.addEquipment(item);
 		assertEquals(200, itemService.addNew(json.toJson(dtoEquipment)).getStatusCodeValue());
 	}
-	
+
 	@Test
 	public void editItems() {
 		DtoEquipment dtoEquipment = new DtoEquipment();
-		Item item = new Item();
-		item.setId(15);
-		item.setName("Banane à la feuille !");
-		item.setQuantity(30);
-		dtoEquipment.addEquipment(item);
-		assertEquals(200, itemService.edit(json.toJson(dtoEquipment)).getStatusCodeValue());
+		List<Item> itemList = itemRepository.findAll();
+		if (itemList.size() > 0) {
+			Item item = itemList.get(itemList.size() - 1);
+			if ("Banane".equals(item.getName())) {
+				item.setName("Banane à la feuille !");
+				item.setQuantity(30);
+				dtoEquipment.addEquipment(item);
+				assertEquals(200, itemService.edit(json.toJson(dtoEquipment)).getStatusCodeValue());
+			}
+		}
 	}
-	
+
 	@Test
 	public void removeItems() {
 		DtoEquipment dtoEquipment = new DtoEquipment();
-		Item item = new Item();
-		item.setId(15);
-		dtoEquipment.addEquipment(item);
-		assertEquals(200, itemService.remove(json.toJson(dtoEquipment)).getStatusCodeValue());
+		List<Item> itemList = itemRepository.findAll();
+		if (itemList.size() > 0) {
+			Item item = itemList.get(itemList.size() - 1);
+			dtoEquipment.addEquipment(item);
+			assertEquals(200, itemService.remove(json.toJson(dtoEquipment)).getStatusCodeValue());
+		}
 	}
 }

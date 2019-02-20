@@ -35,11 +35,14 @@ public class BorrowServiceImpl implements BorrowService {
 			return new ResponseEntity<>("Liste d'équipement inexistant", HttpStatus.NO_CONTENT);
 		}
 		for (Item item : dtoInBorrowItems.getEquipments()) {
+			System.out.println(getClass().getName() + "> try to borrow item " + item.getId());
 			Borrow b = getBorrowForItem(item, guardian);
 			b.setItem(item);
 			b.addQuantity(item.getQuantity());
+			System.out.println(getClass().getName() + "> add quantity : " + item.getQuantity());
 		}
 		if(guardianRepository.save(guardian) == null) {
+			System.out.println(getClass().getName() + "> error when save ");
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);

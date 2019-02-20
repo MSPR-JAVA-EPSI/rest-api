@@ -34,15 +34,16 @@ public class BorrowServiceTest {
 		DtoEquipment dto = new DtoEquipment();
 		Item item = itemRepository.findAll().get(0);
 		Gson gson = new Gson();
+		item.setQuantity(5);
 		dto.addEquipment(item);
-		Guardian g = guardianRepository.findById(2l).get();
-		borrowServiceImpl.borrow(gson.toJson(dto), g).getStatusCodeValue();
+		Guardian g = guardianRepository.findById(3l).get();
+		borrowServiceImpl.borrow(gson.toJson(dto), g);
 		assertEquals(200, borrowServiceImpl.returnBorrows(gson.toJson(dto), g).getStatusCodeValue());
 	}
 	
 	@Test
 	public void borrowListTest() {
-		Guardian g = guardianRepository.findById(2l).get();
+		Guardian g = guardianRepository.findById(3l).get();
 		ResponseEntity<?> result = borrowServiceImpl.getBorrows(g);
 		assertEquals(200, result.getStatusCodeValue());
 	}

@@ -17,9 +17,13 @@ import org.json.JSONObject;
 
 public class FaceRecognitionStream {
 
-	private static final String subscriptionKey = System.getenv().get("MSPR_MICROSOFT_API_KEY");
+	private static String subscriptionKey = "";
 	private static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
 
+	FaceRecognitionStream() {
+		subscriptionKey = System.getenv().get("MSPR_MICROSOFT_API_KEY");
+	}
+	
 	public static UUID getFaceId(byte[] bytes) {
 
 		HttpClient httpclient = HttpClientBuilder.create().build();
