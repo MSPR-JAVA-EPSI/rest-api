@@ -93,7 +93,7 @@ public class BorrowServiceImpl implements BorrowService {
 				break;
 			}
 		}
-		guardian.addBorrow(b);
+		if(b.getGuardian() == null) guardian.addBorrow(b);
 		return b;
 	}
 }
