@@ -20,8 +20,9 @@ public class FaceRecognitionStream {
 	private static String subscriptionKey = "";
 	private static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
 
-	FaceRecognitionStream() {
+	public FaceRecognitionStream() {
 		subscriptionKey = System.getenv().get("MSPR_MICROSOFT_API_KEY");
+		System.out.println(subscriptionKey);
 	}
 	
 	public static UUID getFaceId(byte[] bytes) {
