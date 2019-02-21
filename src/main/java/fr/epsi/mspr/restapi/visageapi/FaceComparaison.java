@@ -41,7 +41,7 @@ public class FaceComparaison {
 				return false;
 			} else {
 				String jsonString = EntityUtils.toString(entity).trim();
-				System.out.println(jsonString);
+				System.out.println(FaceComparaison.class.getName() + "> " + jsonString);
 				if (jsonString.charAt(0) == '[') {
 					JSONArray jsonArray = new JSONArray(jsonString);
 					return jsonArray.getBoolean(1);

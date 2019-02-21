@@ -57,8 +57,7 @@ public class ItemServiceImpl implements ItemService {
 				}
 			}
 		}
-		List<Item> availableItems = new ArrayList<>();
-		return ResponseEntity.ok(new DtoEquipment().setEquipments(availableItems));
+		return ResponseEntity.ok(new DtoEquipment().setEquipments(items));
 	}
 	
 	@Override
