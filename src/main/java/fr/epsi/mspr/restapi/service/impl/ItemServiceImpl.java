@@ -27,7 +27,7 @@ public class ItemServiceImpl implements ItemService {
 	@Autowired
 	private BorrowRepository borrowRepository;
 	
-	private boolean checkItemIsValid(Item item) {
+	public boolean checkItemIsValid(Item item) {
 		final String name = item.getName();
 		if(name == null || name.length() == 0 || name.length() > 30) {
 			System.out.println(this.getClass().getName() + "> bad name content");

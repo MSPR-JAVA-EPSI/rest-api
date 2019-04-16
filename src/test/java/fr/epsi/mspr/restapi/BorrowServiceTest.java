@@ -29,7 +29,7 @@ public class BorrowServiceTest {
 	@Autowired
 	private ItemRepository itemRepository;
 	
-	@Test
+	//@Test
 	public void returnBorrowTest() {
 		DtoEquipment dto = new DtoEquipment();
 		Item item = itemRepository.findAll().get(0);
@@ -42,7 +42,7 @@ public class BorrowServiceTest {
 		assertEquals(200, borrowService.returnBorrows(gson.toJson(dto), g).getStatusCodeValue());
 	}
 	
-	@Test
+	//@Test
 	public void borrowListTest() {
 		Guardian g = guardianRepository.findById(3l).get();
 		ResponseEntity<?> result = borrowService.getBorrows(g);
